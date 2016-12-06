@@ -5,25 +5,32 @@
     
     <title>henvy&#39;Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="iOS IJKPlayer RTMP播放器的集成MacDown
-Hello there! I’m MacDown, the open source Markdown editor for OS X.
-Let me introduce myself.">
+    <meta name="description" content="iOS IJKPlayer RTMP播放器的集成前言前些日子公司要做视频直播，一直也是项目的原因没来得及整理内容。周末闲暇时间特来写篇文章，对IJKPlayer播放器的集成做一下归纳，希望对要做iOS视频直播方向的童鞋们有所帮助。
+1、环境搭建总结来说就是HomeBrew or MacPorts、git、yasm的安装(Homebrew是Mac OSX上的软件包管理工具，当时macOS Sierr">
 <meta property="og:type" content="article">
 <meta property="og:title" content="henvy'Blog">
 <meta property="og:url" content="http://henvyluk.com/2016/11/27/iOS IJKPlayer RTMP播放器的集成/index.html">
 <meta property="og:site_name" content="henvy'Blog">
-<meta property="og:description" content="iOS IJKPlayer RTMP播放器的集成MacDown
-Hello there! I’m MacDown, the open source Markdown editor for OS X.
-Let me introduce myself.">
-<meta property="og:image" content="http://macdown.uranusjr.com/static/base/img/logo-160.png">
-<meta property="og:image" content="http://d.pr/i/10UGP+">
-<meta property="og:updated_time" content="2016-11-27T10:03:22.000Z">
+<meta property="og:description" content="iOS IJKPlayer RTMP播放器的集成前言前些日子公司要做视频直播，一直也是项目的原因没来得及整理内容。周末闲暇时间特来写篇文章，对IJKPlayer播放器的集成做一下归纳，希望对要做iOS视频直播方向的童鞋们有所帮助。
+1、环境搭建总结来说就是HomeBrew or MacPorts、git、yasm的安装(Homebrew是Mac OSX上的软件包管理工具，当时macOS Sierr">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/bd65c956gw1fa6x3vv5utj20fr0a276y.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/bd65c956gw1fa80uhh7udj20fq0a2q79.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/bd65c956gw1fa81grkbobj20la0bzdj3.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/bd65c956gw1fa81xdraz9j20f8091t9i.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/bd65c956gw1fa82aawbmvj20l80by77d.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/bd65c956gw1fa82kh3xkqj20cd05hgme.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/bd65c956gw1fa82mft3vej20ot0dw75x.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/bd65c956gw1fa82nzpo4lj209m010glj.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/bd65c956gw1fa82oevlx3j209a0103ye.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/bd65c956gw1fa82pkzyy4j20az07vdh1.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/bd65c956gw1fa84ty8rbgj20ky0b140n.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/bd65c956gw1fa835tggdlj208j0fsgmm.jpg">
+<meta property="og:updated_time" content="2016-12-06T13:28:56.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="henvy'Blog">
-<meta name="twitter:description" content="iOS IJKPlayer RTMP播放器的集成MacDown
-Hello there! I’m MacDown, the open source Markdown editor for OS X.
-Let me introduce myself.">
-<meta name="twitter:image" content="http://macdown.uranusjr.com/static/base/img/logo-160.png">
+<meta name="twitter:description" content="iOS IJKPlayer RTMP播放器的集成前言前些日子公司要做视频直播，一直也是项目的原因没来得及整理内容。周末闲暇时间特来写篇文章，对IJKPlayer播放器的集成做一下归纳，希望对要做iOS视频直播方向的童鞋们有所帮助。
+1、环境搭建总结来说就是HomeBrew or MacPorts、git、yasm的安装(Homebrew是Mac OSX上的软件包管理工具，当时macOS Sierr">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/bd65c956gw1fa6x3vv5utj20fr0a276y.jpg">
     
 
     
@@ -168,8 +175,8 @@ Let me introduce myself.">
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                2
-                <span>posts</span>
+                1
+                <span>post</span>
             </div>
             <div class="article-info-block">
                 0
@@ -228,14 +235,92 @@ Let me introduce myself.">
         <div class="article-entry" itemprop="articleBody">
         
             
-            <h2 id="iOS-IJKPlayer-RTMP播放器的集成"><a href="#iOS-IJKPlayer-RTMP播放器的集成" class="headerlink" title="iOS IJKPlayer RTMP播放器的集成"></a>iOS IJKPlayer RTMP播放器的集成</h2><h1 id="MacDown"><a href="#MacDown" class="headerlink" title="MacDown"></a>MacDown</h1><p><img src="http://macdown.uranusjr.com/static/base/img/logo-160.png" alt="MacDown logo"></p>
-<p>Hello there! I’m <strong>MacDown</strong>, the open source Markdown editor for OS X.</p>
-<p>Let me introduce myself.</p>
-<a id="more"></a>
-<h2 id="Markdown-and-I"><a href="#Markdown-and-I" class="headerlink" title="Markdown and I"></a>Markdown and I</h2><p><strong>Markdown</strong> is a plain text formatting syntax created by John Gruber, aiming to provide a easy-to-read and feasible markup. The original Markdown syntax specification can be found <a href="http://daringfireball.net/projects/markdown/syntax" target="_blank" rel="external">here</a>.</p>
-<p><strong>MacDown</strong> is created as a simple-to-use editor for Markdown documents. I render your Markdown contents real-time into HTML, and display them in a preview panel.</p>
-<p><img src="http://d.pr/i/10UGP+" alt="MacDown Screenshot"></p>
-<p>I support all the original Markdown syntaxes. But I can do so much more! Various popular but non-standard syntaxes can be turned on/off from the <a href="#markdown-pane"><strong>Markdown</strong> preference pane</a>.</p>
+            <h2 id="iOS-IJKPlayer-RTMP播放器的集成"><a href="#iOS-IJKPlayer-RTMP播放器的集成" class="headerlink" title="iOS IJKPlayer RTMP播放器的集成"></a>iOS IJKPlayer RTMP播放器的集成</h2><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>前些日子公司要做视频直播，一直也是项目的原因没来得及整理内容。周末闲暇时间特来写篇文章，对IJKPlayer播放器的集成做一下归纳，希望对要做iOS视频直播方向的童鞋们有所帮助。</p>
+<h3 id="1、环境搭建"><a href="#1、环境搭建" class="headerlink" title="1、环境搭建"></a>1、环境搭建</h3><p>总结来说就是<a href="http://brew.sh/index_zh-cn.html" target="_blank" rel="external">HomeBrew</a> or <a href="https://www.macports.org/install.php" target="_blank" rel="external">MacPorts</a>、git、yasm的安装(Homebrew是Mac OSX上的软件包管理工具，当时macOS Sierra刚刚出来我就手贱更新了，导致HomeBrew安装出现了问题，所以采用了MacPorts，官方推荐HomeBrew)。</p>
+<p>这里我只做一下版本检查：<br><img src="http://ww1.sinaimg.cn/large/bd65c956gw1fa6x3vv5utj20fr0a276y.jpg" alt="version Screenshot"><br>首先HomeBrew：</p>
+<pre><code>ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
+</code></pre><p>待HomeBrew安装完毕即git、yasm：</p>
+<pre><code>brew install git
+brew install yasm
+</code></pre><h3 id="2-下载ijkplayer编译"><a href="#2-下载ijkplayer编译" class="headerlink" title="2.下载ijkplayer编译"></a>2.下载ijkplayer编译</h3><p>1、 首先新建要下载的文件夹ijkplayer并cd到该目录下。</p>
+<p>2、 紧接着将ijkplayer文件克隆到新建的文件夹内，在终端输入：</p>
+<pre><code>//git克隆
+git clone https://github.com/Bilibili/ijkplayer.git ijkplayer-ios
+
+//进入ijkplayer-ios
+cd ijkplayer-ios
+
+//切换分支
+git checkout -B latest k0.7.5
+</code></pre><p>如图所示：<br><img src="http://ww3.sinaimg.cn/large/bd65c956gw1fa80uhh7udj20fq0a2q79.jpg" alt="download Screenshot"><br>3、下载ffmpeg并编译</p>
+<p>这一步比较纠结国外网络访问的问题，如果失败就多试几次。</p>
+<pre><code>//依然在ijkplayer-ios下载ffmpeg
+./init-ios.sh
+
+//进入ios目录
+cd ios
+</code></pre><p> 这一步如果前面没有问题，此时的terminal就像打了鸡血一样狂奔……<br> (注意中途会有n多个警告，但不要出错就没问题)</p>
+<pre><code>//clean
+./compile-ffmpeg.sh clean
+
+//编译
+./compile-ffmpeg.sh all
+</code></pre><p> 成功走到这一步就离成功不远了，按步骤走是不会出现问题的，即便有大部分也是网络的原因毕竟大天朝对国外的网络都懂的。</p>
+<h3 id="3、demo的处理"><a href="#3、demo的处理" class="headerlink" title="3、demo的处理"></a>3、demo的处理</h3><p>1、打开官方demo并运行<br><img src="http://ww3.sinaimg.cn/large/bd65c956gw1fa81grkbobj20la0bzdj3.jpg" alt="file Screenshot"></p>
+<p>2、只要前面的流程没报错，这里编译运行都不会出现问题：<br>可以在Online Samples中选择一个m3u8测试ijkplayer是否运行正常如图：<br><img src="http://ww4.sinaimg.cn/large/bd65c956gw1fa81xdraz9j20f8091t9i.jpg" alt="Samples Screenshot"></p>
+<h3 id="4、制作framework"><a href="#4、制作framework" class="headerlink" title="4、制作framework"></a>4、制作framework</h3><p>1、打开ijkplayer如图：<br><img src="http://ww3.sinaimg.cn/large/bd65c956gw1fa82aawbmvj20l80by77d.jpg" alt="file Screenshot"><br>2、选择edit scheme，下图：<br><img src="http://ww1.sinaimg.cn/large/bd65c956gw1fa82kh3xkqj20cd05hgme.jpg" alt="edit Screenshot"></p>
+<p>3、将build configuration改为Release后点Close，如图：<br><img src="http://ww2.sinaimg.cn/large/bd65c956gw1fa82mft3vej20ot0dw75x.jpg" alt="Release Screenshot"></p>
+<p>4、分别在模拟器和真机(Generic iOS Device也可以)上编译：<br><img src="http://ww4.sinaimg.cn/large/bd65c956gw1fa82nzpo4lj209m010glj.jpg" alt=""><br><img src="http://ww2.sinaimg.cn/large/bd65c956gw1fa82oevlx3j209a0103ye.jpg" alt=""></p>
+<p>5、打开framework所在的目录:<br><img src="http://ww4.sinaimg.cn/large/bd65c956gw1fa82pkzyy4j20az07vdh1.jpg" alt=""></p>
+<p>6、看名字就知道一个是模拟器一个是真机，此时cd到Products目录：</p>
+<pre><code>//合并
+lipo -create Release-iphoneos/IJKMediaFramework.framework/IJKMediaFramework Release-iphonesimulator/IJKMediaFramework.framework/IJKMediaFramework -output IJKMediaFramework
+//将合并后的framework拷贝到iphoneos/IJKMediaFramework.framework中
+cp IJKMediaFramework Release-iphoneos/IJKMediaFramework.framework/
+</code></pre><p>7、此时framework就制作好了，将制作好的iphoneos/IJKMediaFramework.framework复制到要集成的项目中Add Files…</p>
+<p>8、在所在的项目中添加动态库<br><img src="http://ww4.sinaimg.cn/large/bd65c956gw1fa84ty8rbgj20ky0b140n.jpg" alt="lib Screenshot"></p>
+<p>9、测试集成，将本段代码复制到ViewController.m中，可直接使用：</p>
+<pre><code>#import &quot;ViewController.h&quot;
+#import &lt;IJKMediaFramework/IJKFFMoviePlayerController.h&gt;
+@interface ViewController ()
+@property(nonatomic,strong)IJKFFMoviePlayerController * player;
+@end
+
+@implementation ViewController
+
+- (void)viewDidLoad {
+[super viewDidLoad];
+
+IJKFFOptions *options = [IJKFFOptions optionsByDefault]; //使用默认配置
+NSURL * url = [NSURL URLWithString:@&quot;rtmp://live.hkstv.hk.lxdns.com/live/hks&quot;]; 
+self.player = [[IJKFFMoviePlayerController alloc] initWithContentURL:url withOptions:options]; //初始化播放器，播放在线视频或直播(RTMP)
+self.player.view.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+self.player.view.frame = self.view.bounds;
+self.player.scalingMode = IJKMPMovieScalingModeAspectFit; //缩放模式
+self.player.shouldAutoplay = YES; //开启自动播放
+
+self.view.autoresizesSubviews = YES;
+[self.view addSubview:self.player.view];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+[super viewWillAppear:animated];
+[self.player prepareToPlay];
+}
+
+-(void)viewDidDisappear:(BOOL)animated {
+[super viewDidDisappear:animated];
+[self.player shutdown];
+}
+- (void)didReceiveMemoryWarning {
+[super didReceiveMemoryWarning];
+// Dispose of any resources that can be recreated.
+}
+
+@end
+</code></pre><p>OK完美收工：</p>
+<p><img src="http://ww3.sinaimg.cn/large/bd65c956gw1fa835tggdlj208j0fsgmm.jpg" alt=""></p>
+<h3 id="3、github"><a href="#3、github" class="headerlink" title="3、github"></a>3、github</h3><p>地址在这<a href="https://github.com/henvyluk/IJKMediaPlayer" target="_blank" rel="external">https://github.com/henvyluk/IJKMediaPlayer</a>,另附demo一份，望大神不吝赐教再会！</p>
 
         
         </div>
@@ -246,7 +331,7 @@ Let me introduce myself.">
 
 </div>
 
-    <a data-url="http://henvyluk.com/2016/11/27/iOS IJKPlayer RTMP播放器的集成/" data-id="ciw0had0m00001460xpyaosn8" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://henvyluk.com/2016/11/27/iOS IJKPlayer RTMP播放器的集成/" data-id="ciwdjnlbf0000s860i1xt86dh" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -321,16 +406,6 @@ Let me introduce myself.">
     </div>
     
         
-<nav id="article-nav">
-    
-    
-        <a href="/2016/10/20/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-            <strong class="article-nav-caption">Older</strong>
-            <div class="article-nav-title">Hello World</div>
-        </a>
-    
-</nav>
-
 
     
 </article>
@@ -376,25 +451,6 @@ Let me introduce myself.">
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2016/10/20/hello-world/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2016/10/20/hello-world/" class="title">Hello World</a></p>
-                            <p class="item-date"><time datetime="2016-10-20T03:41:18.000Z" itemprop="datePublished">2016-10-20</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -406,7 +462,7 @@ Let me introduce myself.">
     <div class="widget-wrap">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a><span class="archive-list-count">1</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a><span class="archive-list-count">1</span></li></ul>
         </div>
     </div>
 
