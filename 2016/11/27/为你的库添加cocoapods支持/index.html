@@ -23,7 +23,7 @@
 <meta property="og:image" content="http://i1.piimg.com/4851/65566d8ca8c24f2f.png">
 <meta property="og:image" content="http://i1.piimg.com/4851/82256f629a06c02b.png">
 <meta property="og:image" content="http://i1.piimg.com/4851/8741e76fd78a0318.png">
-<meta property="og:updated_time" content="2016-12-13T14:24:42.000Z">
+<meta property="og:updated_time" content="2016-12-14T10:28:25.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="henvy'Blog">
 <meta name="twitter:description" content="为你的库添加cocoapods支持前言本文意在教大家一步一步将自己的pods发布到CocoaPods中，将自己写的组件或库开源出去，让别人轻轻pod install一下即可安装。自己在上传pods过程中也遇到过一些小坑，也在此做了说明。测试文件为一个很简单的DynamicLabel类，旨在上传pods的过程，写的不好的地方望砖下留情。
@@ -275,6 +275,10 @@ s.requires_arc = true
 <pre><code>s.frameworks = &quot;SomeFramework&quot;, &quot;AnotherFramework&quot;
 </code></pre><p>当我们开发的库中也可能还依赖第三方库，例如JSONKit，那么可以使用:</p>
 <pre><code>s.dependency &quot;JSONKit&quot;, &quot;~&gt; 1.4&quot;
+</code></pre><p>  另外如果要添加xib文件，在pod中,xib不能当成源文件(即s.source_files),虽然可能会通过检测，但是pod install之后会报错，所以必须要将xib放入资源文件中(即s.resources)，我就遇到过这种情况，只好更新了一个版本，</p>
+<pre><code>&quot;Unable to run command &apos;StripNIB xxx.nib&apos; - this target might include its own product&quot;.
+</code></pre><p>再一个添加图片资源的话，类似于xib,不需其它操作，我是将xib和图片都放在s.Resource中形如：</p>
+<pre><code>s.resources = &quot;xxxx/xxx/*.{png,xib}&quot;
 </code></pre><p>  这里看一下我的文件目录：<br>  <img src="http://p1.bqimg.com/4851/bcbaadb24d2d15bf.png" alt="finder Screenshot"></p>
 <p>确认完毕后可通过如下做文件校验：</p>
 <pre><code>pod lib lint
@@ -314,7 +318,7 @@ rm ~/Library/Caches/CocoaPods/search_index.json
 
 </div>
 
-    <a data-url="http://henvyluk.com/2016/11/27/为你的库添加cocoapods支持/" data-id="ciwnlujqz0001c060iwqxm2ek" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://henvyluk.com/2016/11/27/为你的库添加cocoapods支持/" data-id="ciwosp43e00015060ltqh82kp" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
