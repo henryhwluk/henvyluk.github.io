@@ -1,0 +1,2 @@
+http://www.henvyluk.com/2016/12/13/为你的库添加cocoapods支持/
+http://www.henvyluk.com/2016/12/05/iOS IJKPlayer RTMP播放器的集成/
