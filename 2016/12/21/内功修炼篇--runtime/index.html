@@ -6,17 +6,17 @@
 
     <title>内功修炼篇--runtime | henvy&#39;Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="description" content="前言因为前些日子写了个关于导航栏控制器的Demo地址在这，开篇我想先稍微讲一下这个，我是觉得原生的导航栏在UI如此丰富以及多层VC的情形下，导航条的颜色、按钮、标题、隐藏等定性的修改显得不够圆滑，因此就想采用一种透明的方式，将VC用NC包装一层再push出去，这里就用到了AssociatedObjects，为所推的VC添加了属性。关联对象只是运行时中的一点，本篇文章想就关联对象和运行时的一些其他">
+    <meta name="description" content="前言因为前些日子写了个关于导航栏控制器的Demo地址在这，开篇我想先稍微讲一下这个，我是觉得原生的导航栏在UI如此丰富以及多层VC的情形下，导航条的颜色、按钮、标题、隐藏等定性的修改显得不够圆滑，因此就想采用一种透明的方式，将VC用NC包装一层再push出去，这里就用到了AssociatedObjects，为所推的VC添加了属性。关联对象只是运行时中的一点，本篇文章想就关联对象和运行时的一些其">
 <meta property="og:type" content="article">
 <meta property="og:title" content="内功修炼篇--runtime">
 <meta property="og:url" content="http://henvyluk.com/2016/12/21/内功修炼篇--runtime/index.html">
 <meta property="og:site_name" content="henvy'Blog">
-<meta property="og:description" content="前言因为前些日子写了个关于导航栏控制器的Demo地址在这，开篇我想先稍微讲一下这个，我是觉得原生的导航栏在UI如此丰富以及多层VC的情形下，导航条的颜色、按钮、标题、隐藏等定性的修改显得不够圆滑，因此就想采用一种透明的方式，将VC用NC包装一层再push出去，这里就用到了AssociatedObjects，为所推的VC添加了属性。关联对象只是运行时中的一点，本篇文章想就关联对象和运行时的一些其他">
+<meta property="og:description" content="前言因为前些日子写了个关于导航栏控制器的Demo地址在这，开篇我想先稍微讲一下这个，我是觉得原生的导航栏在UI如此丰富以及多层VC的情形下，导航条的颜色、按钮、标题、隐藏等定性的修改显得不够圆滑，因此就想采用一种透明的方式，将VC用NC包装一层再push出去，这里就用到了AssociatedObjects，为所推的VC添加了属性。关联对象只是运行时中的一点，本篇文章想就关联对象和运行时的一些其">
 <meta property="og:image" content="http://i1.piimg.com/1949/7c0c71e93117050f.gif">
-<meta property="og:updated_time" content="2016-12-22T15:13:36.000Z">
+<meta property="og:updated_time" content="2016-12-22T15:17:47.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="内功修炼篇--runtime">
-<meta name="twitter:description" content="前言因为前些日子写了个关于导航栏控制器的Demo地址在这，开篇我想先稍微讲一下这个，我是觉得原生的导航栏在UI如此丰富以及多层VC的情形下，导航条的颜色、按钮、标题、隐藏等定性的修改显得不够圆滑，因此就想采用一种透明的方式，将VC用NC包装一层再push出去，这里就用到了AssociatedObjects，为所推的VC添加了属性。关联对象只是运行时中的一点，本篇文章想就关联对象和运行时的一些其他">
+<meta name="twitter:description" content="前言因为前些日子写了个关于导航栏控制器的Demo地址在这，开篇我想先稍微讲一下这个，我是觉得原生的导航栏在UI如此丰富以及多层VC的情形下，导航条的颜色、按钮、标题、隐藏等定性的修改显得不够圆滑，因此就想采用一种透明的方式，将VC用NC包装一层再push出去，这里就用到了AssociatedObjects，为所推的VC添加了属性。关联对象只是运行时中的一点，本篇文章想就关联对象和运行时的一些其">
 <meta name="twitter:image" content="http://i1.piimg.com/1949/7c0c71e93117050f.gif">
     
 
@@ -247,7 +247,7 @@
         <div class="article-entry" itemprop="articleBody">
         
             
-            <a id="more"></a>
+             <a id="more"></a>
 <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>因为前些日子写了个关于导航栏控制器的Demo<a href="https://github.com/henvyluk/HLNavigationController" target="_blank" rel="external">地址在这</a>，开篇我想先稍微讲一下这个，我是觉得原生的导航栏在UI如此丰富以及多层VC的情形下，导航条的颜色、按钮、标题、隐藏等定性的修改显得不够圆滑，因此就想采用一种透明的方式，将VC用NC包装一层再push出去，这里就用到了AssociatedObjects，为所推的VC添加了属性。关联对象只是运行时中的一点，本篇文章想就关联对象和运行时的一些其他常见用法姑且谈谈吾之愚见，望抛砖引玉。<br><img src="http://i1.piimg.com/1949/7c0c71e93117050f.gif" alt=""></p>
 <h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>其实网上关于运行时的东西多如牛毛，但感觉都像在一遍一遍的嚼舌根又不好理解，我就坦诚相见，拒绝抽象。</p>
 <pre><code>#import &lt;objc/runtime.h&gt;
@@ -400,7 +400,7 @@ return objc;
 
 </div>
 
-    <a data-url="http://henvyluk.com/2016/12/21/内功修炼篇--runtime/" data-id="cix0idl3y0003x960ytg7eu3a" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://henvyluk.com/2016/12/21/内功修炼篇--runtime/" data-id="cix0ij1at0003zv607tda63vv" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
