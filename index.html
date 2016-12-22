@@ -156,7 +156,7 @@
         </div>
         <div class="article-info profile-block">
             <div class="article-info-block">
-                3
+                4
                 <span>posts</span>
             </div>
             <div class="article-info-block">
@@ -209,6 +209,270 @@
 
             
             <section id="main">
+    <article id="post-内功修炼篇--runtime" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2016/12/21/内功修炼篇--runtime/">内功修炼篇--runtime</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/12/21/内功修炼篇--runtime/">
+            <time datetime="2016-12-20T16:00:00.000Z" itemprop="datePublished">2016-12-21</time>
+        </a>
+    </div>
+
+
+                        
+                        
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <a id="more"></a>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>因为前些日子写了个关于导航栏控制器的Demo<a href="https://github.com/henvyluk/HLNavigationController" target="_blank" rel="external">地址在这</a>，开篇我想先稍微讲一下这个，我是觉得原生的导航栏在UI如此丰富以及多层VC的情形下，导航条的颜色、按钮、标题、隐藏等定性的修改显得不够圆滑，因此就想采用一种透明的方式，将VC用NC包装一层再push出去，这里就用到了AssociatedObjects，为所推的VC添加了属性。关联对象只是运行时中的一点，本篇文章想就关联对象和运行时的一些其他常见用法姑且谈谈吾之愚见，望抛砖引玉。<br><img src="http://i1.piimg.com/1949/7c0c71e93117050f.gif" alt=""></p>
+<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>其实网上关于运行时的东西多如牛毛，但感觉都像在一遍一遍的嚼舌根又不好理解，我就坦诚相见，拒绝抽象。</p>
+<pre><code>#import &lt;objc/runtime.h&gt;
+</code></pre><p>运行时其实就是用C编写的我们oc的基石，我们通过运行时所提供的方法等可以跨越oc层直接与C交互，当然对性能也会有所提升。运行时会对一个类进行完全的分解，将类或者对象的每一个部分抽象成一种类型，如果把oc的类比作一个组装机器人，那他就会被运行时拆分为手臂、腿、身体等，我们可以通过运行时直接获取到机器人的手臂一样，这对于操作一个类的属性或者方法是非常方便的。</p>
+<p>我们在开发中切实可以用到的一些场景我做了归纳，下面一一讲解：   </p>
+<h3 id="1、关联对象"><a href="#1、关联对象" class="headerlink" title="1、关联对象"></a>1、关联对象</h3><p>关联对象相关的函数主要有三个，命名相当友好到一看就知道其实就是get/set方法，我们可以在category中使用它们实现动态向类中添加属性和方法。</p>
+<ul>
+<li>objc_setAssociatedObject</li>
+<li>objc_getAssociatedObject</li>
+<li>objc_removeAssociatedObjects</li>
+</ul>
+<p>看一个添加属性的例子，我们创建一个NSObject的分类CategoryProperty：</p>
+<pre><code>@interface NSObject (CategoryProperty)
+
+@property (nonatomic, strong) NSObject *property;
+
+@end
+
+@implementation NSObject (CategoryProperty)
+
+- (NSObject *)property {
+return objc_getAssociatedObject(self, @selector(property));
+}
+
+- (void)setProperty:(NSObject *)value {
+objc_setAssociatedObject(self, @selector(property), value, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+@end
+</code></pre><h5 id="key值"><a href="#key值" class="headerlink" title="key值"></a>key值</h5><p>这三个函数的参数key值推荐三种命名方式：</p>
+<ul>
+<li>声明 <code>static char kAssociatedObjectKey</code>，使用 <code>&amp;kAssociatedObjectKey</code> 作为 <code>key</code> 值;</li>
+<li>声明 <code>static void *kAssociatedObjectKey</code> = <code>&amp;kAssociatedObjectKey</code> ，使用 <code>kAssociatedObjectKey</code> 作为 <code>key</code> 值；</li>
+<li>用 <code>selector</code> ，使用 <code>getter</code> 方法的名称作为 <code>key</code> 值。</li>
+</ul>
+<p>上面的例子用的是第三种方法，省的命名了也算简单。</p>
+<h5 id="关联策略"><a href="#关联策略" class="headerlink" title="关联策略"></a>关联策略</h5><p>至于关联策略有五种可供选择，有强弱引用和原子非原子的区分，在绝大多数情况下，我们都会使用<code>OBJC_ASSOCIATION_RETAIN_NONATOMIC</code> 的关联策略，这可以保证我们持有关联对象不会被过早的释放。</p>
+<p>在看一个添加方法的例子，我们创建一个UIButton的分类block：</p>
+<pre><code>typedef void (^btnBlock)();
+
+@interface UIButton (block)
+
+- (void)handelWithBlock:(btnBlock)block;
+
+@end
+
+static const char btnKey;
+
+@implementation UIButton (block)
+
+- (void)handelWithBlock:(btnBlock)block{
+if (block){
+    objc_setAssociatedObject(self, &amp;btnKey, block, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+[self addTarget:self action:@selector(btnAction) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)btnAction{
+btnBlock block = objc_getAssociatedObject(self, &amp;btnKey);
+block();
+}
+
+@end
+</code></pre><p>这样我们就为button添加了一个block的方法，在调用button的时候就可以直接用handelWithBlock来回调了。</p>
+<h3 id="2、方法交换"><a href="#2、方法交换" class="headerlink" title="2、方法交换"></a>2、方法交换</h3><p>顾名思义，就是两个方法执行交换，我们建一个UIViewController的分类VCCategory：</p>
+<pre><code>@implementation UIViewController (VCCategory)
+
++ (void)load
+{
+//方法交换应该被保证在程序中只会执行一次
+static dispatch_once_t onceToken;
+dispatch_once(&amp;onceToken, ^{
+    SEL systemSel = @selector(viewWillAppear:);
+    SEL henvySel = @selector(hl_viewWillAppear:);
+    Method systemMethod = class_getInstanceMethod([self class], systemSel);
+    Method henvyMethod = class_getInstanceMethod([self class], henvySel);
+    BOOL isAdd = class_addMethod(self, systemSel, method_getImplementation(henvyMethod), method_getTypeEncoding(henvyMethod));
+    if (isAdd) {
+        //如果成功，说明类中不存在这个方法的实现
+        //将被交换方法的实现替换到这个并不存在的实现
+        class_replaceMethod(self, henvySel, method_getImplementation(systemMethod), method_getTypeEncoding(systemMethod));
+    }else{
+        //否则，交换两个方法的实现
+        method_exchangeImplementations(systemMethod, henvyMethod);
+    }
+});
+}
+- (void)hl_viewWillAppear:(BOOL)animated{
+//这里自己调用自己，表面上循环引用其实已经被viewWillAppear替换掉了
+[self hl_viewWillAppear:animated];
+NSLog(@&quot;henvy&quot;);
+}
+@end
+</code></pre><p>这个时候在一个自己定义的viewController中viewWillAppear方法中就可以看到输出henvy。</p>
+<h3 id="3、发送消息"><a href="#3、发送消息" class="headerlink" title="3、发送消息"></a>3、发送消息</h3><p>发送消息即objc_msgSend方法很简单，这里就举个很简单的例子,比如你要调用形如一下的一个方法，</p>
+<pre><code>//类、方法、参数
+[someObject messageName:parameter];
+</code></pre><p>还可以用objc_msgSend写作为：</p>
+<pre><code>objc_msgSend（someObject,@selector（messageName),parameter)；
+</code></pre><h3 id="4、字典转模型"><a href="#4、字典转模型" class="headerlink" title="4、字典转模型"></a>4、字典转模型</h3><p>KVC是把字典中所有值给模型的属性赋值，这个是要求字典中的Key必须要在模型里能找到相应的值，如果找不到就会报错，因此我们可以通过重写KVC中的forUndefinedKey这个方法。当然我们可以通过runtime的方式去实现，把KVC的原理倒过来，通过遍历模型的值，从字典中取值，这里新建一个模型ModelClass：</p>
+<pre><code>+ (instancetype)modelWithDict:(NSDictionary *)dict{
+
+id objc = [[self alloc] init];
+// count:成员变量个数
+unsigned int count = 0;
+// 获取成员变量数组
+Ivar *ivarList = class_copyIvarList(self, &amp;count);
+
+// 遍历所有成员变量
+for (int i = 0; i &lt; count; i++) {
+    // 获取成员变量
+    Ivar ivar = ivarList[i];
+
+    // 获取成员变量名字
+    NSString *ivarName = [NSString stringWithUTF8String:ivar_getName(ivar)];
+    // 获取成员变量类型
+    NSString *ivarType = [NSString stringWithUTF8String:ivar_getTypeEncoding(ivar)];
+    // 格式化
+    ivarType = [ivarType stringByReplacingOccurrencesOfString:@&quot;\&quot;&quot; withString:@&quot;&quot;];
+    ivarType = [ivarType stringByReplacingOccurrencesOfString:@&quot;@&quot; withString:@&quot;&quot;];
+    // 获取key
+    NSString *key = [ivarName substringFromIndex:1];
+
+    // 去字典中查找对应value        
+    id value = dict[key];
+
+    // 二级转换:判断下value是否是字典
+    if ([value isKindOfClass:[NSDictionary class]] &amp;&amp; ![ivarType hasPrefix:@&quot;NS&quot;]) {
+        // 获取类
+        Class modelClass = NSClassFromString(ivarType);
+        value = [modelClass modelWithDict:value];
+    }
+    // 给模型中属性赋值
+    if (value) {
+        [objc setValue:value forKey:key];
+    }
+}
+
+return objc;
+}
+</code></pre><h3 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h3><p>总体上来说运行时在开发中比较常用的到的场景我就先总结这么多，当然也欢迎大神能够来补充是最好不过，文章中的测试代码我都写在前言的<a href="https://github.com/henvyluk/HLNavigationController" target="_blank" rel="external">Demo</a>里了，同时也欢迎到我的<a href="https://github.com/henvyluk" target="_blank" rel="external">Github</a>讨论，如果本文有什么不太对的地方，也请一定要给我指正，感激不尽！</p>
+<p>好了写了这么多有点累洗洗睡了，祝大家晚安！另外送上一首歌<a href="http://music.163.com/#/song?id=30212877" target="_blank" rel="external">【李志—墙上的向日葵】</a></p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+</div>
+
+    <a data-url="http://henvyluk.com/2016/12/21/内功修炼篇--runtime/" data-id="cix0hzust0001ql60q1gekpf9" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+<script>
+    (function ($) {
+        // Prevent duplicate binding
+        if (typeof(__SHARE_BUTTON_BINDED__) === 'undefined' || !__SHARE_BUTTON_BINDED__) {
+            __SHARE_BUTTON_BINDED__ = true;
+        } else {
+            return;
+        }
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="fa fa-twitter article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="fa fa-facebook article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="fa fa-pinterest article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="fa fa-google article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+            
+    
+        <a href="http://henvyluk.com/2016/12/21/内功修炼篇--runtime/#comments" class="article-comment-link disqus-comment-count" data-disqus-url="http://henvyluk.com/2016/12/21/内功修炼篇--runtime/">Comments</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
     <article id="post-github-hexo提交到百度谷歌搜索引擎" class="article article-type-post" itemscope itemprop="blogPost">
     <div class="article-inner">
         
@@ -254,7 +518,7 @@
 
 </div>
 
-    <a data-url="http://henvyluk.com/2016/12/17/github-hexo提交到百度谷歌搜索引擎/" data-id="ciwul066d0002zr60wnxd6lfx" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://henvyluk.com/2016/12/17/github-hexo提交到百度谷歌搜索引擎/" data-id="cix0hzusy0003ql60zxtmkgm3" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -377,7 +641,7 @@
 
 </div>
 
-    <a data-url="http://henvyluk.com/2016/12/13/为你的库添加cocoapods支持/" data-id="ciwul06690001zr60fzwxsqsu" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://henvyluk.com/2016/12/13/为你的库添加cocoapods支持/" data-id="cix0hzusx0002ql60x9u43vwp" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -500,7 +764,7 @@
 
 </div>
 
-    <a data-url="http://henvyluk.com/2016/12/05/iOS IJKPlayer RTMP播放器的集成/" data-id="ciwul06630000zr601z5cbagd" class="article-share-link"><i class="fa fa-share"></i>Share</a>
+    <a data-url="http://henvyluk.com/2016/12/05/iOS IJKPlayer RTMP播放器的集成/" data-id="cix0hzusn0000ql603d701c3k" class="article-share-link"><i class="fa fa-share"></i>Share</a>
 <script>
     (function ($) {
         // Prevent duplicate binding
@@ -591,6 +855,25 @@
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/2016/12/21/内功修炼篇--runtime/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/12/21/内功修炼篇--runtime/" class="title">内功修炼篇--runtime</a></p>
+                            <p class="item-date"><time datetime="2016-12-20T16:00:00.000Z" itemprop="datePublished">2016-12-21</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/2016/12/17/github-hexo提交到百度谷歌搜索引擎/" class="thumbnail">
     
     
@@ -656,7 +939,7 @@
     <div class="widget-wrap">
         <h3 class="widget-title">archives</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a><span class="archive-list-count">3</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a><span class="archive-list-count">4</span></li></ul>
         </div>
     </div>
 
