@@ -252,130 +252,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/uncategorized/README/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="henvy">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="henvy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/uncategorized/README/" itemprop="url">Untitled</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-19T22:41:48+08:00">
-                2018-08-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="PSOF软件截图"><a href="#PSOF软件截图" class="headerlink" title="PSOF软件截图"></a>PSOF软件截图</h1>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/uncategorized/README/#more" rel="contents">
-              Read more &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/uncategorized/SparkseedTerms &PrivacyPolicy/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -446,8 +322,7 @@
 
       
         
-          <h2 id="Terms-of-Use"><a href="#Terms-of-Use" class="headerlink" title="Terms of Use"></a>Terms of Use</h2><p>####1. Accept the terms</p>
-<p>The PSOF Mobile App (hereafter referred to as “this APP”) is available to you in accordance with the following Terms of Service. These terms may be updated by us at any time without prior notice. The PSOF Use Agreement (hereinafter referred to as the “Usage Agreement”) will be posted on the APP with the modified content or content link. Once the revised usage agreement is announced, it effectively replaces the original usage agreement. You should read this usage agreement carefully before using the services provided by this app. If you do not agree to the use agreement and/or modify it at any time, please stop using all the services provided by us immediately; once you use the service, you are deemed to have understood and fully agreed to the contents of this agreement. , including any modifications made by us to the use agreement at any time, and become the APP user (hereinafter referred to as “user”).</p>
+          <p><img src alt></p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/uncategorized/SparkseedTerms &PrivacyPolicy/#more" rel="contents">
@@ -571,75 +446,14 @@
 
       
         
-          
-            <a id="more"></a>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>由于公司项目需求，今天看了看关于js和webview交互的一些东西，由于以前没接触过这块，算是自己的一个盲区，因此记录下来，代码实现的过程很简短，先在此敲一砖。</p>
-<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>###1、获取 <code>&lt;img&gt;</code> 元素<br>在webview的代理方法<code>webViewDidFinishLoad</code>中用js实现对页面图片URL数组的获取：</p>
-<pre><code>static  NSString *const jsGetImages =
-@&quot;function getImages(){\
-var objs = document.getElementsByTagName(\&quot;img\&quot;);\
-var imgScr = &apos;&apos;;\
-for(var i=0;i&lt;objs.length;i++){\
-imgScr = imgScr + objs[i].src + &apos;+&apos;;\
-};\
-return imgScr;\
-};&quot;;
-//注入js方法
-[webView stringByEvaluatingJavaScriptFromString:jsGetImages];
-NSString *urlResurlt = [webView stringByEvaluatingJavaScriptFromString:@&quot;getImages()&quot;];</code></pre><p>urlResurlt获取到的是URL字符串，将其拆分到数组：</p>
-<pre><code>_mUrlArray = [NSMutableArray arrayWithArray:[urlResurlt componentsSeparatedByString:@&quot;+&quot;]];
-//去除最后一个空元素
-if (_mUrlArray.count &gt;= 2) {
-    [_mUrlArray removeLastObject];
-}</code></pre><p>###2、添加图片可点击js</p>
-<pre><code>[_webView stringByEvaluatingJavaScriptFromString:@&quot;function registerImageClickAction(){\
- var imgs=document.getElementsByTagName(&apos;img&apos;);\
- var length=imgs.length;\
- for(var i=0;i&lt;length;i++){\
- img=imgs[i];\
- img.onclick=function(){\
- window.location.href=&apos;image-preview:&apos;+this.src}\
- }\
- }&quot;];
-[_webView stringByEvaluatingJavaScriptFromString:@&quot;registerImageClickAction();&quot;];</code></pre><p>###3、捕获到图片的点击事件<br>在webView的<code>shouldStartLoadWithRequest</code>代理方法中获取被点击图片的url：</p>
-<pre><code>- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-
-if ([request.URL.scheme isEqualToString:@&quot;image-preview&quot;]) {
-    NSString* path = [request.URL.absoluteString substringFromIndex:[@&quot;image-preview:&quot; length]];
-    path = [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    //path 就是被点击图片的url
-    [self loadPhotoWith:path];
-    return NO;
-}
-return YES;
-}</code></pre><p>###4、显示图片<br>这里我用的是IDMPhotoBrowser：</p>
-<pre><code> - (void)loadPhotoWith: (NSString *)path {
-// URLs array
-__block NSInteger index;//图片点击的序号
-NSMutableArray *photosURL = [NSMutableArray array];
-[_mUrlArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-    NSURL *url = [NSURL URLWithString:obj];
-    [photosURL addObject:url];
-    if ([path isEqualToString:obj]) {
-         index = idx;
-    }
-}];
-
-// Create an array to store IDMPhoto objects
-NSMutableArray *photos = [NSMutableArray new];
-
-for (NSURL *url in photosURL) {
-    IDMPhoto *photo = [IDMPhoto photoWithURL:url];
-    [photos addObject:photo];
-}
-IDMPhotoBrowser *browser = [[IDMPhotoBrowser alloc] initWithPhotos:photos];
-browser.displayCounterLabel = YES;
-browser.displayActionButton = NO;
-browser.displayArrowButton = YES;
-[browser setInitialPageIndex:index];
-[self presentViewController:browser animated:YES completion:nil];
-}</code></pre>
-          
+          <p><img src alt></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/uncategorized/实现Webview的看图模式/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -756,7 +570,7 @@ browser.displayArrowButton = YES;
 
       
         
-          <p><img src="http://p1.bpimg.com/582490/0608cdbf1a8fae6c.jpg" alt="the block"></p>
+          <p><img src alt></p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/uncategorized/Block深度软文/#more" rel="contents">
@@ -880,7 +694,7 @@ browser.displayArrowButton = YES;
 
       
         
-          <p><img src="http://i1.piimg.com/1949/9deca88ed8ca33c5.png" alt="SVG"></p>
+          <p><img src alt></p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/uncategorized/PaintCode让Logo飞出屏幕/#more" rel="contents">
@@ -1128,7 +942,7 @@ browser.displayArrowButton = YES;
 
       
         
-          <p><img src="http://p1.bqimg.com/4851/e5e9d02cad3bd280.jpg" alt="鄂尔多斯大草原"></p>
+          <p><img src alt></p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/uncategorized/github-hexo提交到百度谷歌搜索引擎/#more" rel="contents">
@@ -1252,7 +1066,7 @@ browser.displayArrowButton = YES;
 
       
         
-          <p><img src="http://image.club.china.com/twhb/2015/9/18/26154256/1442512701724_1056.jpg" alt="多伦大草原"></p>
+          <p><img src alt></p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/uncategorized/为你的库添加cocoapods支持/#more" rel="contents">
@@ -1376,7 +1190,7 @@ browser.displayArrowButton = YES;
 
       
         
-          <p><img src="http://p1.bpimg.com/4851/82640aa142fdf251.jpg" alt></p>
+          <p><img src alt></p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/uncategorized/iOS IJKPlayer RTMP播放器的集成/#more" rel="contents">
@@ -1465,7 +1279,7 @@ browser.displayArrowButton = YES;
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
