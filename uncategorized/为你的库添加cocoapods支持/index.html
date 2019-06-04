@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="为你的库添加cocoapods支持">
+<meta property="og:url" content="http://yoursite.com/uncategorized/为你的库添加cocoapods支持/index.html">
+<meta property="og:site_name" content="henvy&#39;s blog">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://image.club.china.com/twhb/2015/9/18/26154256/1442512701724_1056.jpg">
+<meta property="og:image" content="http://p1.bqimg.com/4851/bcbaadb24d2d15bf.png">
+<meta property="og:image" content="http://p1.bqimg.com/4851/132b0f8ba0964752.png">
+<meta property="og:image" content="http://p1.bqimg.com/4851/5ee9c81e4b1a20ab.png">
+<meta property="og:image" content="http://i1.piimg.com/4851/9afe61b7af212484.png">
+<meta property="og:image" content="http://i1.piimg.com/4851/65566d8ca8c24f2f.png">
+<meta property="og:image" content="http://i1.piimg.com/4851/a084bbacd8500f82.png">
+<meta property="og:image" content="http://i1.piimg.com/4851/65566d8ca8c24f2f.png">
+<meta property="og:image" content="http://i1.piimg.com/4851/82256f629a06c02b.png">
+<meta property="og:image" content="http://i1.piimg.com/4851/8741e76fd78a0318.png">
+<meta property="og:updated_time" content="2016-12-17T10:33:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="为你的库添加cocoapods支持">
+<meta name="twitter:image" content="http://image.club.china.com/twhb/2015/9/18/26154256/1442512701724_1056.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/uncategorized/为你的库添加cocoapods支持/">
+
+
+
+
+
+  <title>为你的库添加cocoapods支持 | henvy's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">henvy's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人的一切痛苦，本质上都是对自己无能的愤怒。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/uncategorized/为你的库添加cocoapods支持/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="henvy">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="henvy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">为你的库添加cocoapods支持</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-13T21:57:06+08:00">
+                2016-12-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="http://image.club.china.com/twhb/2015/9/18/26154256/1442512701724_1056.jpg" alt="多伦大草原"></p>
+<a id="more"></a>
+
+<h1 id="为你的库添加cocoapods支持"><a href="#为你的库添加cocoapods支持" class="headerlink" title="为你的库添加cocoapods支持"></a>为你的库添加cocoapods支持</h1><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>本文意在教大家一步一步将自己的pods发布到CocoaPods中，将自己写的组件或库开源出去，让别人轻轻pod install一下即可安装。自己在上传pods过程中也遇到过一些小坑，也在此做了说明。测试文件为一个很简单的DynamicLabel类，旨在上传pods的过程，写的不好的地方望砖下留情。</p>
+<h3 id="1、环境"><a href="#1、环境" class="headerlink" title="1、环境"></a>1、环境</h3><p>cocoapods的安装这里就不再说了，另外要说明的是你首先要把项目push到github，并release一个版本打上tag标签（目的在于让cocoapods能够根据你提供的tag来锁定版本），如果没有push可cd到你的项目根目录如下：</p>
+<pre><code>//添加
+git add -A
+//commit
+git commit -m&quot;version description&quot;
+//push
+git push origin master
+
+//打上标签
+git tag&apos;0.0.3&apos;
+//推送
+git push --tags</code></pre><h3 id="2、创建podspec文件"><a href="#2、创建podspec文件" class="headerlink" title="2、创建podspec文件"></a>2、创建podspec文件</h3><p>cd到你的项目根目录如下：</p>
+<pre><code>//创建podspec文件
+pod spec create DynamicLabel</code></pre><p>之后会生成一个.podspec文件，我这里用sublime打开，可以看到里面有很多待编辑项，顾名思义，我这里编辑项如下：</p>
+<pre><code>s.name         = &quot;DynamicLabel&quot;
+s.version      = &quot;0.0.3&quot;
+s.summary      = &quot;limited label Scroll display&quot;
+s.description  = &lt;&lt;-DESC
+limited label Scroll display.
+               DESC
+
+s.homepage     = &quot;https://github.com/henvyluk/DynamicLabel&quot;
+s.license      = &quot;MIT&quot;
+s.author             = { &quot;henvyluk&quot; =&gt; &quot;henvyluk@163.com&quot; }
+s.platform     = :ios, &quot;7.0&quot;
+s.source       = { :git =&gt; &quot;https://github.com/henvyluk/DynamicLabel.git&quot;, :tag =&gt; &quot;0.0.3&quot; }
+
+s.source_files  = &quot;Classes&quot;, &quot;DynamicLabel/Classes/**/*.{h,m}&quot;
+
+s.exclude_files = &quot;Classes/Exclude&quot;
+
+s.framework  = &quot;UIKit&quot;
+s.requires_arc = true</code></pre><p>  值得注意的是s.source_files需要根据podspec文件的相对位置来写，表示DynamicLabel 下的Classes文件夹下的所有文件下的所有.h/.m文件，s.framework是你的项目所用到的库，我这里只用到了UIKit，如果你的项目中依赖多个库，可以使用：</p>
+<pre><code>s.frameworks = &quot;SomeFramework&quot;, &quot;AnotherFramework&quot;</code></pre><p>当我们开发的库中也可能还依赖第三方库，例如JSONKit，那么可以使用:</p>
+<pre><code>s.dependency &quot;JSONKit&quot;, &quot;~&gt; 1.4&quot;</code></pre><p>  另外如果要添加xib文件，在pod中,xib不能当成源文件(即s.source_files),虽然可能会通过检测，但是pod install之后会报错，所以必须要将xib放入资源文件中(即s.resources)，我就遇到过这种情况，只好更新了一个版本，</p>
+<pre><code>&quot;Unable to run command &apos;StripNIB xxx.nib&apos; - this target might include its own product&quot;.</code></pre><p>再一个添加图片资源的话，类似于xib,不需其它操作，我是将xib和图片都放在s.Resource中形如：</p>
+<pre><code>s.resources = &quot;xxxx/xxx/*.{png,xib}&quot;</code></pre><p>  这里看一下我的文件目录：<br>  <img src="http://p1.bqimg.com/4851/bcbaadb24d2d15bf.png" alt="finder Screenshot"></p>
+<p>确认完毕后可通过如下做文件校验：</p>
+<pre><code>pod lib lint</code></pre><p> 此时如果有红色错误The spec did not pass validation, due to 1 error可通过在上述指令后加–verbose来看出错误出在哪里，根据提示的信息在做修改，这里提醒s.source_files处容易出错，注意文件的位置，以及s.framework不要出错，否则会项目内的代码不识别。</p>
+<p>当出现如下的提示时就代表验证通过了，可以进行下一步了：</p>
+<p> <img src="http://p1.bqimg.com/4851/132b0f8ba0964752.png" alt="terminal Screenshot"></p>
+<h3 id="3、注册Trunk"><a href="#3、注册Trunk" class="headerlink" title="3、注册Trunk"></a>3、注册Trunk</h3><pre><code>//分别是你的邮箱和描述
+pod trunk register henvyluk@163.com --description=&apos;henvy&apos;</code></pre><p>之后你的邮箱会收到确认邮件，点击邮件中的链接后验证后：</p>
+<pre><code>pod trunk me</code></pre><p>如图则表示注册成功，可以进行接下来的push了<br>  <img src="http://p1.bqimg.com/4851/5ee9c81e4b1a20ab.png" alt="terminal Screenshot"></p>
+<h3 id="4、Trunk-push"><a href="#4、Trunk-push" class="headerlink" title="4、Trunk push"></a>4、Trunk push</h3><p>执行：</p>
+<pre><code>pod trunk push</code></pre><p>如果push过程中出错，再检查一下podspec文件，我之前因为版本匹配问题出了错。如果看到如下图即代表上传成功，我的pod版本比较新，好像旧的版本跟这有点区别，会给dataURL和日至打印，这个新版本的比较人性化一点，但为啥我觉得很幼稚有木有。<br><img src="http://i1.piimg.com/4851/9afe61b7af212484.png" alt="terminal Screenshot"></p>
+<h3 id="5、验证"><a href="#5、验证" class="headerlink" title="5、验证"></a>5、验证</h3><p>说是push成功了怎么说也要验证一下吧，来search一下：</p>
+<pre><code>pod search DynamicLabel</code></pre><p> 一看握草！！</p>
+<p><img src="http://i1.piimg.com/4851/65566d8ca8c24f2f.png" alt="terminal Screenshot"></p>
+<p>push出错了？其实不然，cocoapods官网已经有了我们的代码，不信可以搜搜看，See Podspec还可以看到我们的项目在Specs仓库中的具体位置。<br><img src="http://i1.piimg.com/4851/a084bbacd8500f82.png" alt="coocapods Screenshot"><br>问题是我们的电脑~/.cocoapods/repos/master/Specs目录并未更新，执行：</p>
+<pre><code>//更新pod库
+pod setup</code></pre><p>这一步具体做了什么东西呢？将官方的Specs仓库文件目录下载下来，然后和我们本地的Specs目录进行比对，增加的增加，删除的删除。</p>
+<p>第一次会有点慢，之后再setup的话基本上是秒更，最后setup completed,好了现在是最新的了，再来search一下，<br><img src="http://i1.piimg.com/4851/65566d8ca8c24f2f.png" alt="terminal Screenshot"></p>
+<p>要命了，仍然搜不到，我当初就是卡在了这一步，卡的莫名其妙的，因为实在想不通还有什么会影响search，后来在<a href="http://stackoverflow.com" target="_blank" rel="noopener">stackoverflow</a>上有提到search_index.json，这是搜索的缓存目录，</p>
+<pre><code>//清除索引缓存
+rm ~/Library/Caches/CocoaPods/search_index.json</code></pre><p>之后pod search DynamicLabel，等待重建索引后：<br><img src="http://i1.piimg.com/4851/82256f629a06c02b.png" alt="terminal Screenshot"></p>
+<h3 id="6、写在最后"><a href="#6、写在最后" class="headerlink" title="6、写在最后"></a>6、写在最后</h3><p>好了至此制作自己的整个开源库的过程就完成了，如果以后要更新版本，同样修改podspec文件重新push就好了，要注意的是如果你之前提交过pod，那么你需要去<a href="https://trunk.cocoapods.org/claims/new" target="_blank" rel="noopener">Claim your Pod</a>认领:<br><img src="http://i1.piimg.com/4851/8741e76fd78a0318.png" alt="Claim your Pod Screenshot"></p>
+<p>至此结束，也望大神不吝指教，邮件<a href="mailto:henvyluk@163.com" target="_blank" rel="noopener">henvyluk@163.com</a>,同时欢迎跳转我的<a href="https://github.com/henvyluk" target="_blank" rel="noopener">GitHub主页</a>讨论，再会！</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/uncategorized/iOS IJKPlayer RTMP播放器的集成/" rel="next" title="iOS IJKPlayer RTMP播放器的集成">
+                <i class="fa fa-chevron-left"></i> iOS IJKPlayer RTMP播放器的集成
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/uncategorized/github-hexo提交到百度谷歌搜索引擎/" rel="prev" title="github+hexo提交到百度谷歌搜索引擎">
+                github+hexo提交到百度谷歌搜索引擎 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="henvy">
+            
+              <p class="site-author-name" itemprop="name">henvy</p>
+              <p class="site-description motion-element" itemprop="description">人的一切痛苦，本质上都是对自己无能的愤怒</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/henvyluk" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:henvyluk@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com/henvyluk" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://instagram.com/henvyluk6137" target="_blank" title="Instagram">
+                      
+                        <i class="fa fa-fw fa-instagram"></i>Instagram</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#为你的库添加cocoapods支持"><span class="nav-number">1.</span> <span class="nav-text">为你的库添加cocoapods支持</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.0.1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1、环境"><span class="nav-number">1.0.2.</span> <span class="nav-text">1、环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、创建podspec文件"><span class="nav-number">1.0.3.</span> <span class="nav-text">2、创建podspec文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、注册Trunk"><span class="nav-number">1.0.4.</span> <span class="nav-text">3、注册Trunk</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、Trunk-push"><span class="nav-number">1.0.5.</span> <span class="nav-text">4、Trunk push</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5、验证"><span class="nav-number">1.0.6.</span> <span class="nav-text">5、验证</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6、写在最后"><span class="nav-number">1.0.7.</span> <span class="nav-text">6、写在最后</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">henvy</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":300,"height":600},"mobile":{"show":true}});</script></body>
+</html>
