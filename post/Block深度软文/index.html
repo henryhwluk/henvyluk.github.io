@@ -79,12 +79,12 @@
 
 
 
-<meta name="description" content="前言深究block可以说会涉及不少东西，笔者欲通过循序渐进的方式来谈及block相关，略陈固陋。">
+<meta name="description" content="前言深究block可以说会涉及不少东西，笔者欲通过循序渐进的方式来谈及block相关，略陈固陋。 阅读本文前，希望我们还是先一起来过一下几个概念：  指针和对象，都是内存块。一个大，一个小。一个在栈中，一个在堆中。 iOS中，我们可以生命一个指针，也可以通过alloc获取一块内存。 我们可以直接消灭一个指针，将其置为nil，但是我们没办法直接消灭一块对象内存。对于对象内存，我们永远只能依靠系统去回">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Block深度软文">
 <meta property="og:url" content="http://yoursite.com/post/Block深度软文/index.html">
 <meta property="og:site_name" content="henvy&#39;s blog">
-<meta property="og:description" content="前言深究block可以说会涉及不少东西，笔者欲通过循序渐进的方式来谈及block相关，略陈固陋。">
+<meta property="og:description" content="前言深究block可以说会涉及不少东西，笔者欲通过循序渐进的方式来谈及block相关，略陈固陋。 阅读本文前，希望我们还是先一起来过一下几个概念：  指针和对象，都是内存块。一个大，一个小。一个在栈中，一个在堆中。 iOS中，我们可以生命一个指针，也可以通过alloc获取一块内存。 我们可以直接消灭一个指针，将其置为nil，但是我们没办法直接消灭一块对象内存。对于对象内存，我们永远只能依靠系统去回">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://i1.piimg.com/582490/0e069c17c9f92dee.gif">
 <meta property="og:image" content="http://p1.bpimg.com/582490/6a231599ff8c1e3b.png">
@@ -94,10 +94,10 @@
 <meta property="og:image" content="http://p1.bpimg.com/582490/95bd32d9b0749d01.png">
 <meta property="og:image" content="http://i1.piimg.com/582490/e1b0134308dc1e59.png">
 <meta property="og:image" content="http://p1.bpimg.com/582490/1c82867a795ee3d8.png">
-<meta property="og:updated_time" content="2019-06-04T15:37:44.386Z">
+<meta property="og:updated_time" content="2019-06-04T15:47:56.904Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Block深度软文">
-<meta name="twitter:description" content="前言深究block可以说会涉及不少东西，笔者欲通过循序渐进的方式来谈及block相关，略陈固陋。">
+<meta name="twitter:description" content="前言深究block可以说会涉及不少东西，笔者欲通过循序渐进的方式来谈及block相关，略陈固陋。 阅读本文前，希望我们还是先一起来过一下几个概念：  指针和对象，都是内存块。一个大，一个小。一个在栈中，一个在堆中。 iOS中，我们可以生命一个指针，也可以通过alloc获取一块内存。 我们可以直接消灭一个指针，将其置为nil，但是我们没办法直接消灭一块对象内存。对于对象内存，我们永远只能依靠系统去回">
 <meta name="twitter:image" content="http://i1.piimg.com/582490/0e069c17c9f92dee.gif">
 
 
@@ -329,8 +329,6 @@
 
       
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>深究block可以说会涉及不少东西，笔者欲通过循序渐进的方式来谈及block相关，略陈固陋。</p>
-<a id="more"></a>
-
 <p>阅读本文前，希望我们还是先一起来过一下几个概念：</p>
 <ul>
 <li>指针和对象，都是内存块。一个大，一个小。一个在栈中，一个在堆中。</li>
@@ -339,6 +337,8 @@
 <li>函数在栈区，函数调用完毕后其stack frame将被弹出结束其生命周期。</li>
 <li>Objective-C的对象在内存中是以堆的方式分配空间。</li>
 </ul>
+<a id="more"></a>
+
 <h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>###1、ARC strong和weak指针<br>在讲block之前呢先讲一下strong和weak指针的问题，以便于更好的理解下面block中的循环引用以及变量截获等问题。我们知道ARC消除了手动管理内存的烦琐，编译器会自动在适当的地方插入适当的retain、release、autorelease语句。规则很简单，只要还有一个变量指向对象，对象就会保持在内存中。当指针指向新值，或者指针不再存在时，相关联的对象就会自动释放。如下图动画模拟引用计数回收器，红色闪烁表示引用计数行为，引用计数的优势在于垃圾会被很快检测到，你可以看到红色闪烁过后紧接着该区域变黑（<a href="https://github.com/kenfox/gc-viz" target="_blank" rel="noopener">图片来自</a>）。</p>
 <p><img src="http://i1.piimg.com/582490/0e069c17c9f92dee.gif" alt="REF_COUNT"></p>
 <ul>

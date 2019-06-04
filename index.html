@@ -700,6 +700,14 @@
       
         
           <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>深究block可以说会涉及不少东西，笔者欲通过循序渐进的方式来谈及block相关，略陈固陋。</p>
+<p>阅读本文前，希望我们还是先一起来过一下几个概念：</p>
+<ul>
+<li>指针和对象，都是内存块。一个大，一个小。一个在栈中，一个在堆中。</li>
+<li>iOS中，我们可以生命一个指针，也可以通过alloc获取一块内存。</li>
+<li>我们可以直接消灭一个指针，将其置为nil，但是我们没办法直接消灭一块对象内存。对于对象内存，我们永远只能依靠系统去回收。即当这个对象不被任何指针所拥有时，系统就会收回该对象内存。</li>
+<li>函数在栈区，函数调用完毕后其stack frame将被弹出结束其生命周期。</li>
+<li>Objective-C的对象在内存中是以堆的方式分配空间。</li>
+</ul>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/post/Block深度软文/#more" rel="contents">
@@ -823,7 +831,7 @@
 
       
         
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>相信大家都见过Twitter APP的加载界面，logo飞出屏幕的感觉很是生动。</p>
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>相信大家都见过Twitter APP的加载界面，logo飞出屏幕的感觉很是生动，PaintCode这款软件可以自动生成你的图案代码，如图是模仿Twitter的加载界面。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/post/PaintCode让Logo飞出屏幕/#more" rel="contents">
@@ -947,7 +955,7 @@
 
       
         
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>因为前些日子写了个关于导航栏控制器的Demo<a href="https://github.com/henvyluk/HLNavigationController" target="_blank" rel="noopener">地址在这</a></p>
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>因为前些日子写了个关于导航栏控制器的Demo<a href="https://github.com/henvyluk/HLNavigationController" target="_blank" rel="noopener">地址在这</a>，开篇我想先稍微讲一下这个，我是觉得原生的导航栏在UI如此丰富以及多层VC的情形下，导航条的颜色、按钮、标题、隐藏等定性的修改显得不够圆滑，因此就想采用一种透明的方式，将VC用NC包装一层再push出去，这里就用到了AssociatedObjects，为所推的VC添加了属性。关联对象只是运行时中的一点，本篇文章想就关联对象和运行时的一些其他常见用法姑且谈谈吾之愚见，望抛砖引玉。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/post/内功修炼篇--runtime/#more" rel="contents">
@@ -1071,7 +1079,8 @@
 
       
         
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前些日子用GitHub Pages+hexo搭建了一个网站。</p>
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前些日子用GitHub Pages+hexo搭建了一个网站，后来发现百度谷歌都是无法搜索到我的网站上的内容。</p>
+<h2 id="确认收录情况"><a href="#确认收录情况" class="headerlink" title="确认收录情况"></a>确认收录情况</h2><p>在百度或者谷歌上面输入下面格式来判断，如果能搜索到就说明被收录，否则就没有.</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/post/github-hexo提交到百度谷歌搜索引擎/#more" rel="contents">
