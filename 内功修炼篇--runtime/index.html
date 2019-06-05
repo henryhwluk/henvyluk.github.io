@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="前言因为前些日子写了个关于导航栏控制器的Demo地址在这，开篇我想先稍微讲一下这个，我是觉得原生的导航栏在UI如此丰富以及多层VC的情形下，导航条的颜色、按钮、标题、隐藏等定性的修改显得不够圆滑，因此就想采用一种透明的方式，将VC用NC包装一层再push出去，这里就用到了AssociatedObjects，为所推的VC添加了属性。关联对象只是运行时中的一点，本篇文章想就关联对象和运行时的一些其他常">
+<meta property="og:type" content="article">
+<meta property="og:title" content="内功修炼篇--runtime">
+<meta property="og:url" content="http://henvu.com/内功修炼篇--runtime/index.html">
+<meta property="og:site_name" content="Henvy&#39;s Notes">
+<meta property="og:description" content="前言因为前些日子写了个关于导航栏控制器的Demo地址在这，开篇我想先稍微讲一下这个，我是觉得原生的导航栏在UI如此丰富以及多层VC的情形下，导航条的颜色、按钮、标题、隐藏等定性的修改显得不够圆滑，因此就想采用一种透明的方式，将VC用NC包装一层再push出去，这里就用到了AssociatedObjects，为所推的VC添加了属性。关联对象只是运行时中的一点，本篇文章想就关联对象和运行时的一些其他常">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-06-04T15:46:33.439Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="内功修炼篇--runtime">
+<meta name="twitter:description" content="前言因为前些日子写了个关于导航栏控制器的Demo地址在这，开篇我想先稍微讲一下这个，我是觉得原生的导航栏在UI如此丰富以及多层VC的情形下，导航条的颜色、按钮、标题、隐藏等定性的修改显得不够圆滑，因此就想采用一种透明的方式，将VC用NC包装一层再push出去，这里就用到了AssociatedObjects，为所推的VC添加了属性。关联对象只是运行时中的一点，本篇文章想就关联对象和运行时的一些其他常">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://henvu.com/内功修炼篇--runtime/">
+
+
+
+
+
+  <title>内功修炼篇--runtime | Henvy's Notes</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Henvy's Notes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">人的一切痛苦，本质上都是对自己无能的愤怒。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://henvu.com/内功修炼篇--runtime/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="henvy">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Henvy's Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">内功修炼篇--runtime</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-21T00:00:00+08:00">
+                2016-12-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>因为前些日子写了个关于导航栏控制器的Demo<a href="https://github.com/henvyluk/HLNavigationController" target="_blank" rel="noopener">地址在这</a>，开篇我想先稍微讲一下这个，我是觉得原生的导航栏在UI如此丰富以及多层VC的情形下，导航条的颜色、按钮、标题、隐藏等定性的修改显得不够圆滑，因此就想采用一种透明的方式，将VC用NC包装一层再push出去，这里就用到了AssociatedObjects，为所推的VC添加了属性。关联对象只是运行时中的一点，本篇文章想就关联对象和运行时的一些其他常见用法姑且谈谈吾之愚见，望抛砖引玉。</p>
+<a id="more"></a>
+
+<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>其实网上关于运行时的东西多如牛毛，但感觉都像在一遍一遍的嚼舌根又不好理解，我就坦诚相见，拒绝抽象。</p>
+<pre><code>#import &lt;objc/runtime.h&gt;</code></pre><p>运行时其实就是用C编写的我们oc的基石，我们通过运行时所提供的方法等可以跨越oc层直接与C交互，当然对性能也会有所提升。运行时会对一个类进行完全的分解，将类或者对象的每一个部分抽象成一种类型，如果把oc的类比作一个组装机器人，那他就会被运行时拆分为手臂、腿、身体等，我们可以通过运行时直接获取到机器人的手臂一样，这对于操作一个类的属性或者方法是非常方便的。</p>
+<p>我们在开发中切实可以用到的一些场景我做了归纳，下面一一讲解：   </p>
+<h3 id="1、关联对象"><a href="#1、关联对象" class="headerlink" title="1、关联对象"></a>1、关联对象</h3><p>关联对象相关的函数主要有三个，命名相当友好到一看就知道其实就是get/set方法，我们可以在category中使用它们实现动态向类中添加属性和方法。</p>
+<ul>
+<li>objc_setAssociatedObject</li>
+<li>objc_getAssociatedObject</li>
+<li>objc_removeAssociatedObjects</li>
+</ul>
+<p>看一个添加属性的例子，我们创建一个NSObject的分类CategoryProperty：</p>
+<pre><code>@interface NSObject (CategoryProperty)
+
+@property (nonatomic, strong) NSObject *property;
+
+@end
+
+@implementation NSObject (CategoryProperty)
+
+- (NSObject *)property {
+return objc_getAssociatedObject(self, @selector(property));
+}
+
+- (void)setProperty:(NSObject *)value {
+objc_setAssociatedObject(self, @selector(property), value, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+@end</code></pre><h5 id="key值"><a href="#key值" class="headerlink" title="key值"></a>key值</h5><p>这三个函数的参数key值推荐三种命名方式：</p>
+<ul>
+<li>声明 <code>static char kAssociatedObjectKey</code>，使用 <code>&amp;kAssociatedObjectKey</code> 作为 <code>key</code> 值;</li>
+<li>声明 <code>static void *kAssociatedObjectKey</code> = <code>&amp;kAssociatedObjectKey</code> ，使用 <code>kAssociatedObjectKey</code> 作为 <code>key</code> 值；</li>
+<li>用 <code>selector</code> ，使用 <code>getter</code> 方法的名称作为 <code>key</code> 值。</li>
+</ul>
+<p>上面的例子用的是第三种方法，省的命名了也算简单。</p>
+<h5 id="关联策略"><a href="#关联策略" class="headerlink" title="关联策略"></a>关联策略</h5><p>至于关联策略有五种可供选择，有强弱引用和原子非原子的区分，在绝大多数情况下，我们都会使用<code>OBJC_ASSOCIATION_RETAIN_NONATOMIC</code> 的关联策略，这可以保证我们持有关联对象不会被过早的释放。</p>
+<p>在看一个添加方法的例子，我们创建一个UIButton的分类block：</p>
+<pre><code>typedef void (^btnBlock)();
+
+@interface UIButton (block)
+
+- (void)handelWithBlock:(btnBlock)block;
+
+@end
+
+static const char btnKey;
+
+@implementation UIButton (block)
+
+- (void)handelWithBlock:(btnBlock)block{
+if (block){
+    objc_setAssociatedObject(self, &amp;btnKey, block, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+[self addTarget:self action:@selector(btnAction) forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)btnAction{
+btnBlock block = objc_getAssociatedObject(self, &amp;btnKey);
+block();
+}
+
+@end</code></pre><p>这样我们就为button添加了一个block的方法，在调用button的时候就可以直接用handelWithBlock来回调了。</p>
+<h3 id="2、方法交换"><a href="#2、方法交换" class="headerlink" title="2、方法交换"></a>2、方法交换</h3><p>顾名思义，就是两个方法执行交换，我们建一个UIViewController的分类VCCategory：</p>
+<pre><code>@implementation UIViewController (VCCategory)
+
++ (void)load
+{
+//方法交换应该被保证在程序中只会执行一次
+static dispatch_once_t onceToken;
+dispatch_once(&amp;onceToken, ^{
+    SEL systemSel = @selector(viewWillAppear:);
+    SEL henvySel = @selector(hl_viewWillAppear:);
+    Method systemMethod = class_getInstanceMethod([self class], systemSel);
+    Method henvyMethod = class_getInstanceMethod([self class], henvySel);
+    BOOL isAdd = class_addMethod(self, systemSel, method_getImplementation(henvyMethod), method_getTypeEncoding(henvyMethod));
+    if (isAdd) {
+        //如果成功，说明类中不存在这个方法的实现
+        //将被交换方法的实现替换到这个并不存在的实现
+        class_replaceMethod(self, henvySel, method_getImplementation(systemMethod), method_getTypeEncoding(systemMethod));
+    }else{
+        //否则，交换两个方法的实现
+        method_exchangeImplementations(systemMethod, henvyMethod);
+    }
+});
+}
+- (void)hl_viewWillAppear:(BOOL)animated{
+//这里自己调用自己，表面上循环引用其实已经被viewWillAppear替换掉了
+[self hl_viewWillAppear:animated];
+NSLog(@&quot;henvy&quot;);
+}
+@end</code></pre><p>这个时候在一个自己定义的viewController中viewWillAppear方法中就可以看到输出henvy。</p>
+<h3 id="3、发送消息"><a href="#3、发送消息" class="headerlink" title="3、发送消息"></a>3、发送消息</h3><p>发送消息即objc_msgSend方法很简单，这里就举个很简单的例子,比如你要调用形如一下的一个方法，</p>
+<pre><code>//类、方法、参数
+[someObject messageName:parameter];</code></pre><p>还可以用objc_msgSend写作为：</p>
+<pre><code>objc_msgSend（someObject,@selector（messageName),parameter)；</code></pre><h3 id="4、字典转模型"><a href="#4、字典转模型" class="headerlink" title="4、字典转模型"></a>4、字典转模型</h3><p>KVC是把字典中所有值给模型的属性赋值，这个是要求字典中的Key必须要在模型里能找到相应的值，如果找不到就会报错，因此我们可以通过重写KVC中的forUndefinedKey这个方法。当然我们可以通过runtime的方式去实现，把KVC的原理倒过来，通过遍历模型的值，从字典中取值，这里新建一个模型ModelClass：</p>
+<pre><code>+ (instancetype)modelWithDict:(NSDictionary *)dict{
+
+id objc = [[self alloc] init];
+// count:成员变量个数
+unsigned int count = 0;
+// 获取成员变量数组
+Ivar *ivarList = class_copyIvarList(self, &amp;count);
+
+// 遍历所有成员变量
+for (int i = 0; i &lt; count; i++) {
+    // 获取成员变量
+    Ivar ivar = ivarList[i];
+
+    // 获取成员变量名字
+    NSString *ivarName = [NSString stringWithUTF8String:ivar_getName(ivar)];
+    // 获取成员变量类型
+    NSString *ivarType = [NSString stringWithUTF8String:ivar_getTypeEncoding(ivar)];
+    // 格式化
+    ivarType = [ivarType stringByReplacingOccurrencesOfString:@&quot;\&quot;&quot; withString:@&quot;&quot;];
+    ivarType = [ivarType stringByReplacingOccurrencesOfString:@&quot;@&quot; withString:@&quot;&quot;];
+    // 获取key
+    NSString *key = [ivarName substringFromIndex:1];
+
+    // 去字典中查找对应value        
+    id value = dict[key];
+
+    // 二级转换:判断下value是否是字典
+    if ([value isKindOfClass:[NSDictionary class]] &amp;&amp; ![ivarType hasPrefix:@&quot;NS&quot;]) {
+        // 获取类
+        Class modelClass = NSClassFromString(ivarType);
+        value = [modelClass modelWithDict:value];
+    }
+    // 给模型中属性赋值
+    if (value) {
+        [objc setValue:value forKey:key];
+    }
+}
+
+return objc;
+}</code></pre><h3 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h3><p>总体上来说运行时在开发中比较常用的到的场景我就先总结这么多，当然也欢迎大神能够来补充是最好不过，文章中的测试代码我都写在前言的<a href="https://github.com/henvyluk/HLNavigationController" target="_blank" rel="noopener">Demo</a>里了，同时也欢迎到我的<a href="https://github.com/henvyluk" target="_blank" rel="noopener">Github</a>讨论，如果本文有什么不太对的地方，也请一定要给我指正，感激不尽！</p>
+<p>祝大家晚安！另外送上一首歌<a href="http://music.163.com/#/song?id=30212877" target="_blank" rel="noopener">【李志—墙上的向日葵】</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/github-hexo提交到百度谷歌搜索引擎/" rel="next" title="github+hexo提交到百度谷歌搜索引擎">
+                <i class="fa fa-chevron-left"></i> github+hexo提交到百度谷歌搜索引擎
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/PaintCode让Logo飞出屏幕/" rel="prev" title="PaintCode让Logo飞出屏幕">
+                PaintCode让Logo飞出屏幕 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC80NDU3OC8yMTEwOA=="></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="henvy">
+            
+              <p class="site-author-name" itemprop="name">henvy</p>
+              <p class="site-description motion-element" itemprop="description">iOS Developer</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/henvyluk" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:henvyluk@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://stackoverflow.com/henvyluk" target="_blank" title="StackOverflow">
+                      
+                        <i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://instagram.com/henvyluk6137" target="_blank" title="Instagram">
+                      
+                        <i class="fa fa-fw fa-instagram"></i>Instagram</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正文"><span class="nav-number">2.</span> <span class="nav-text">正文</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、关联对象"><span class="nav-number">2.1.</span> <span class="nav-text">1、关联对象</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#key值"><span class="nav-number">2.1.0.1.</span> <span class="nav-text">key值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#关联策略"><span class="nav-number">2.1.0.2.</span> <span class="nav-text">关联策略</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、方法交换"><span class="nav-number">2.2.</span> <span class="nav-text">2、方法交换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、发送消息"><span class="nav-number">2.3.</span> <span class="nav-text">3、发送消息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、字典转模型"><span class="nav-number">2.4.</span> <span class="nav-text">4、字典转模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#写在最后"><span class="nav-number">2.5.</span> <span class="nav-text">写在最后</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">henvy</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":300,"height":600},"mobile":{"show":true}});</script></body>
+</html>
