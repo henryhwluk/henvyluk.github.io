@@ -96,17 +96,18 @@
 
 
 
-  <meta name="description" content="前言因为前些日子写了个关于导航栏控制器的Demo地址在这，开篇我想先稍微讲一下这个，我是觉得原生的导航栏在UI如此丰富以及多层VC的情形下，导航条的颜色、按钮、标题、隐藏等定性的修改显得不够圆滑，因此就想采用一种透明的方式，将VC用NC包装一层再push出去，这里就用到了AssociatedObjects，为所推的VC添加了属性。关联对象只是运行时中的一点，本篇文章想就关联对象和运行时的一些其他常">
+  <meta name="description" content="AppName Localization project -&amp;gt; localizations add add file -&amp;gt; InfoPlist.string -&amp;gt; right action -&amp;gt; localization &amp;quot;CFBundleDisplayName&amp;quot; = &amp;quot;language&amp;quot;">
+<meta name="keywords" content="iOS">
 <meta property="og:type" content="article">
-<meta property="og:title" content="内功修炼篇--runtime">
-<meta property="og:url" content="http://henvyluk.me/runtime/index.html">
+<meta property="og:title" content="iOS国际化">
+<meta property="og:url" content="http://henvyluk.me/iOS-localization/index.html">
 <meta property="og:site_name" content="Henvy&#39;s Notes">
-<meta property="og:description" content="前言因为前些日子写了个关于导航栏控制器的Demo地址在这，开篇我想先稍微讲一下这个，我是觉得原生的导航栏在UI如此丰富以及多层VC的情形下，导航条的颜色、按钮、标题、隐藏等定性的修改显得不够圆滑，因此就想采用一种透明的方式，将VC用NC包装一层再push出去，这里就用到了AssociatedObjects，为所推的VC添加了属性。关联对象只是运行时中的一点，本篇文章想就关联对象和运行时的一些其他常">
+<meta property="og:description" content="AppName Localization project -&amp;gt; localizations add add file -&amp;gt; InfoPlist.string -&amp;gt; right action -&amp;gt; localization &amp;quot;CFBundleDisplayName&amp;quot; = &amp;quot;language&amp;quot;">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2016-12-20T16:00:00.000Z">
+<meta property="og:updated_time" content="2019-06-05T16:00:00.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="内功修炼篇--runtime">
-<meta name="twitter:description" content="前言因为前些日子写了个关于导航栏控制器的Demo地址在这，开篇我想先稍微讲一下这个，我是觉得原生的导航栏在UI如此丰富以及多层VC的情形下，导航条的颜色、按钮、标题、隐藏等定性的修改显得不够圆滑，因此就想采用一种透明的方式，将VC用NC包装一层再push出去，这里就用到了AssociatedObjects，为所推的VC添加了属性。关联对象只是运行时中的一点，本篇文章想就关联对象和运行时的一些其他常">
+<meta name="twitter:title" content="iOS国际化">
+<meta name="twitter:description" content="AppName Localization project -&amp;gt; localizations add add file -&amp;gt; InfoPlist.string -&amp;gt; right action -&amp;gt; localization &amp;quot;CFBundleDisplayName&amp;quot; = &amp;quot;language&amp;quot;">
 
 
 
@@ -114,7 +115,7 @@
 
   
   
-  <link rel="canonical" href="http://henvyluk.me/runtime/">
+  <link rel="canonical" href="http://henvyluk.me/iOS-localization/">
 
 
 
@@ -124,7 +125,7 @@
   };
 </script>
 
-  <title>内功修炼篇--runtime | Henvy's Notes</title>
+  <title>iOS国际化 | Henvy's Notes</title>
   
 
 
@@ -335,7 +336,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://henvyluk.me/runtime/">
+    <link itemprop="mainEntityOfPage" href="http://henvyluk.me/iOS-localization/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="henvy">
@@ -352,7 +353,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">内功修炼篇--runtime
+          <h1 class="post-title" itemprop="name headline">iOS国际化
 
               
             
@@ -378,7 +379,7 @@
                 
               
 
-              <time title="Created: 2016-12-21 00:00:00" itemprop="dateCreated datePublished" datetime="2016-12-21T00:00:00+08:00">2016-12-21</time>
+              <time title="Created: 2019-06-06 00:00:00" itemprop="dateCreated datePublished" datetime="2019-06-06T00:00:00+08:00">2019-06-06</time>
             
 
             
@@ -397,8 +398,8 @@
                 </span>
             
                 <span class="post-meta-item-text">Comments: </span>
-                <a href="/runtime/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/runtime/" itemprop="commentCount"></span>
+                <a href="/iOS-localization/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/iOS-localization/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -406,7 +407,7 @@
 
           
           
-            <span id="/runtime/" class="leancloud_visitors" data-flag-title="内功修炼篇--runtime">
+            <span id="/iOS-localization/" class="leancloud_visitors" data-flag-title="iOS国际化">
               <span class="post-meta-divider">|</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
@@ -431,7 +432,7 @@
                 
                   <span class="post-meta-item-text">Symbols count in article: </span>
                 
-                <span title="Symbols count in article">4.9k</span>
+                <span title="Symbols count in article">879</span>
               
 
               
@@ -455,143 +456,36 @@
       
 
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>因为前些日子写了个关于导航栏控制器的Demo<a href="https://github.com/henvyluk/HLNavigationController" target="_blank" rel="noopener">地址在这</a>，开篇我想先稍微讲一下这个，我是觉得原生的导航栏在UI如此丰富以及多层VC的情形下，导航条的颜色、按钮、标题、隐藏等定性的修改显得不够圆滑，因此就想采用一种透明的方式，将VC用NC包装一层再push出去，这里就用到了AssociatedObjects，为所推的VC添加了属性。关联对象只是运行时中的一点，本篇文章想就关联对象和运行时的一些其他常见用法姑且谈谈吾之愚见，望抛砖引玉。</p>
+        <h4 id="AppName-Localization"><a href="#AppName-Localization" class="headerlink" title="AppName Localization"></a>AppName Localization</h4><ul>
+<li>project -&gt; localizations add</li>
+<li>add file -&gt; <code>InfoPlist.string</code> -&gt; right action -&gt; localization</li>
+<li><code>&quot;CFBundleDisplayName&quot; = &quot;language&quot;</code></li>
+</ul>
 <a id="more"></a>
 
-<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>其实网上关于运行时的东西多如牛毛，但感觉都像在一遍一遍的嚼舌根又不好理解，我就坦诚相见，拒绝抽象。</p>
-<pre><code>#import &lt;objc/runtime.h&gt;</code></pre><p>运行时其实就是用C编写的我们oc的基石，我们通过运行时所提供的方法等可以跨越oc层直接与C交互，当然对性能也会有所提升。运行时会对一个类进行完全的分解，将类或者对象的每一个部分抽象成一种类型，如果把oc的类比作一个组装机器人，那他就会被运行时拆分为手臂、腿、身体等，我们可以通过运行时直接获取到机器人的手臂一样，这对于操作一个类的属性或者方法是非常方便的。</p>
-<p>我们在开发中切实可以用到的一些场景我做了归纳，下面一一讲解：   </p>
-<h3 id="1、关联对象"><a href="#1、关联对象" class="headerlink" title="1、关联对象"></a>1、关联对象</h3><p>关联对象相关的函数主要有三个，命名相当友好到一看就知道其实就是get/set方法，我们可以在category中使用它们实现动态向类中添加属性和方法。</p>
-<ul>
-<li>objc_setAssociatedObject</li>
-<li>objc_getAssociatedObject</li>
-<li>objc_removeAssociatedObjects</li>
+<h4 id="String-Localization"><a href="#String-Localization" class="headerlink" title="String Localization"></a>String Localization</h4><ul>
+<li>add file -&gt; <code>Localizable.string</code> -&gt; right action -&gt; localization</li>
+<li><code>&quot;字符名称&quot; = &quot;stringName&quot;</code></li>
 </ul>
-<p>看一个添加属性的例子，我们创建一个NSObject的分类CategoryProperty：</p>
-<pre><code>@interface NSObject (CategoryProperty)
-
-@property (nonatomic, strong) NSObject *property;
-
-@end
-
-@implementation NSObject (CategoryProperty)
-
-- (NSObject *)property {
-return objc_getAssociatedObject(self, @selector(property));
-}
-
-- (void)setProperty:(NSObject *)value {
-objc_setAssociatedObject(self, @selector(property), value, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-@end</code></pre><h5 id="key值"><a href="#key值" class="headerlink" title="key值"></a>key值</h5><p>这三个函数的参数key值推荐三种命名方式：</p>
+<h4 id="正则替换-amp-批量生成"><a href="#正则替换-amp-批量生成" class="headerlink" title="正则替换&amp;批量生成"></a>正则替换&amp;批量生成</h4><ul>
+<li><p>swift</p>
 <ul>
-<li>声明 <code>static char kAssociatedObjectKey</code>，使用 <code>&amp;kAssociatedObjectKey</code> 作为 <code>key</code> 值;</li>
-<li>声明 <code>static void *kAssociatedObjectKey</code> = <code>&amp;kAssociatedObjectKey</code> ，使用 <code>kAssociatedObjectKey</code> 作为 <code>key</code> 值；</li>
-<li>用 <code>selector</code> ，使用 <code>getter</code> 方法的名称作为 <code>key</code> 值。</li>
+<li>replace -&gt; <code>(&quot;[^\x00-\xff]+&quot;)</code></li>
+<li>with -&gt; <code>NSLocalizedString($1, comment: &quot;&quot;)</code></li>
+<li>terminal cd项目根目录</li>
+<li><code>find ./ -name &#39;*.swift&#39; -print0 | xargs -0 genstrings -o projectName/language.lproj/</code></li>
 </ul>
-<p>上面的例子用的是第三种方法，省的命名了也算简单。</p>
-<h5 id="关联策略"><a href="#关联策略" class="headerlink" title="关联策略"></a>关联策略</h5><p>至于关联策略有五种可供选择，有强弱引用和原子非原子的区分，在绝大多数情况下，我们都会使用<code>OBJC_ASSOCIATION_RETAIN_NONATOMIC</code> 的关联策略，这可以保证我们持有关联对象不会被过早的释放。</p>
-<p>在看一个添加方法的例子，我们创建一个UIButton的分类block：</p>
-<pre><code>typedef void (^btnBlock)();
-
-@interface UIButton (block)
-
-- (void)handelWithBlock:(btnBlock)block;
-
-@end
-
-static const char btnKey;
-
-@implementation UIButton (block)
-
-- (void)handelWithBlock:(btnBlock)block{
-if (block){
-    objc_setAssociatedObject(self, &amp;btnKey, block, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    }
-[self addTarget:self action:@selector(btnAction) forControlEvents:UIControlEventTouchUpInside];
-}
-
-- (void)btnAction{
-btnBlock block = objc_getAssociatedObject(self, &amp;btnKey);
-block();
-}
-
-@end</code></pre><p>这样我们就为button添加了一个block的方法，在调用button的时候就可以直接用handelWithBlock来回调了。</p>
-<h3 id="2、方法交换"><a href="#2、方法交换" class="headerlink" title="2、方法交换"></a>2、方法交换</h3><p>顾名思义，就是两个方法执行交换，我们建一个UIViewController的分类VCCategory：</p>
-<pre><code>@implementation UIViewController (VCCategory)
-
-+ (void)load
-{
-//方法交换应该被保证在程序中只会执行一次
-static dispatch_once_t onceToken;
-dispatch_once(&amp;onceToken, ^{
-    SEL systemSel = @selector(viewWillAppear:);
-    SEL henvySel = @selector(hl_viewWillAppear:);
-    Method systemMethod = class_getInstanceMethod([self class], systemSel);
-    Method henvyMethod = class_getInstanceMethod([self class], henvySel);
-    BOOL isAdd = class_addMethod(self, systemSel, method_getImplementation(henvyMethod), method_getTypeEncoding(henvyMethod));
-    if (isAdd) {
-        //如果成功，说明类中不存在这个方法的实现
-        //将被交换方法的实现替换到这个并不存在的实现
-        class_replaceMethod(self, henvySel, method_getImplementation(systemMethod), method_getTypeEncoding(systemMethod));
-    }else{
-        //否则，交换两个方法的实现
-        method_exchangeImplementations(systemMethod, henvyMethod);
-    }
-});
-}
-- (void)hl_viewWillAppear:(BOOL)animated{
-//这里自己调用自己，表面上循环引用其实已经被viewWillAppear替换掉了
-[self hl_viewWillAppear:animated];
-NSLog(@&quot;henvy&quot;);
-}
-@end</code></pre><p>这个时候在一个自己定义的viewController中viewWillAppear方法中就可以看到输出henvy。</p>
-<h3 id="3、发送消息"><a href="#3、发送消息" class="headerlink" title="3、发送消息"></a>3、发送消息</h3><p>发送消息即objc_msgSend方法很简单，这里就举个很简单的例子,比如你要调用形如一下的一个方法，</p>
-<pre><code>//类、方法、参数
-[someObject messageName:parameter];</code></pre><p>还可以用objc_msgSend写作为：</p>
-<pre><code>objc_msgSend（someObject,@selector（messageName),parameter)；</code></pre><h3 id="4、字典转模型"><a href="#4、字典转模型" class="headerlink" title="4、字典转模型"></a>4、字典转模型</h3><p>KVC是把字典中所有值给模型的属性赋值，这个是要求字典中的Key必须要在模型里能找到相应的值，如果找不到就会报错，因此我们可以通过重写KVC中的forUndefinedKey这个方法。当然我们可以通过runtime的方式去实现，把KVC的原理倒过来，通过遍历模型的值，从字典中取值，这里新建一个模型ModelClass：</p>
-<pre><code>+ (instancetype)modelWithDict:(NSDictionary *)dict{
-
-id objc = [[self alloc] init];
-// count:成员变量个数
-unsigned int count = 0;
-// 获取成员变量数组
-Ivar *ivarList = class_copyIvarList(self, &amp;count);
-
-// 遍历所有成员变量
-for (int i = 0; i &lt; count; i++) {
-    // 获取成员变量
-    Ivar ivar = ivarList[i];
-
-    // 获取成员变量名字
-    NSString *ivarName = [NSString stringWithUTF8String:ivar_getName(ivar)];
-    // 获取成员变量类型
-    NSString *ivarType = [NSString stringWithUTF8String:ivar_getTypeEncoding(ivar)];
-    // 格式化
-    ivarType = [ivarType stringByReplacingOccurrencesOfString:@&quot;\&quot;&quot; withString:@&quot;&quot;];
-    ivarType = [ivarType stringByReplacingOccurrencesOfString:@&quot;@&quot; withString:@&quot;&quot;];
-    // 获取key
-    NSString *key = [ivarName substringFromIndex:1];
-
-    // 去字典中查找对应value        
-    id value = dict[key];
-
-    // 二级转换:判断下value是否是字典
-    if ([value isKindOfClass:[NSDictionary class]] &amp;&amp; ![ivarType hasPrefix:@&quot;NS&quot;]) {
-        // 获取类
-        Class modelClass = NSClassFromString(ivarType);
-        value = [modelClass modelWithDict:value];
-    }
-    // 给模型中属性赋值
-    if (value) {
-        [objc setValue:value forKey:key];
-    }
-}
-
-return objc;
-}</code></pre><h3 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h3><p>总体上来说运行时在开发中比较常用的到的场景我就先总结这么多，当然也欢迎大神能够来补充是最好不过，文章中的测试代码我都写在前言的<a href="https://github.com/henvyluk/HLNavigationController" target="_blank" rel="noopener">Demo</a>里了，同时也欢迎到我的<a href="https://github.com/henvyluk" target="_blank" rel="noopener">Github</a>讨论，如果本文有什么不太对的地方，也请一定要给我指正，感激不尽！</p>
-<p>祝大家晚安！另外送上一首歌<a href="http://music.163.com/#/song?id=30212877" target="_blank" rel="noopener">【李志—墙上的向日葵】</a></p>
+</li>
+<li><p>oc</p>
+<ul>
+<li>replace -&gt; <code>(@&quot;[^\x00-\xff]+&quot;)</code></li>
+<li>with -&gt; <code>NSLocalizedString($1, comment: @&quot;&quot;)</code></li>
+<li>terminal cd项目根目录</li>
+<li><code>find . \( -name &#39;*.m&#39; -o -name &#39;*.h&#39; \) -print0 | xargs -0 genstrings -o projectName/language.lproj/</code></li>
+<li><code>find ./ -name &quot;*.m&quot; -print0 | xargs -0 genstrings -o projectName/language.lproj/</code></li>
+</ul>
+</li>
+</ul>
 
       
     </div>
@@ -613,6 +507,15 @@ return objc;
 
     <footer class="post-footer">
       
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag"># iOS</a>
+          
+        </div>
+      
 
       
       
@@ -622,8 +525,8 @@ return objc;
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/github&hexo/" rel="next" title="github+hexo提交到百度谷歌搜索引擎">
-                <i class="fa fa-chevron-left"></i> github+hexo提交到百度谷歌搜索引擎
+              <a href="/PSOF&TermsPrivacyPolicy/" rel="next" title="PSOF Terms & Privacy Policy.">
+                <i class="fa fa-chevron-left"></i> PSOF Terms & Privacy Policy.
               </a>
             
           </div>
@@ -632,8 +535,8 @@ return objc;
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/PaintCode/" rel="prev" title="PaintCode让Logo飞出屏幕">
-                PaintCode让Logo飞出屏幕 <i class="fa fa-chevron-right"></i>
+              <a href="/ubuntu-vnc-gnome/" rel="prev" title="Ubuntu VNC Gnome">
+                Ubuntu VNC Gnome <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -820,7 +723,7 @@ return objc;
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正文"><span class="nav-number">2.</span> <span class="nav-text">正文</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、关联对象"><span class="nav-number">2.1.</span> <span class="nav-text">1、关联对象</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#key值"><span class="nav-number">2.1.0.1.</span> <span class="nav-text">key值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#关联策略"><span class="nav-number">2.1.0.2.</span> <span class="nav-text">关联策略</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、方法交换"><span class="nav-number">2.2.</span> <span class="nav-text">2、方法交换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、发送消息"><span class="nav-number">2.3.</span> <span class="nav-text">3、发送消息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、字典转模型"><span class="nav-number">2.4.</span> <span class="nav-text">4、字典转模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#写在最后"><span class="nav-number">2.5.</span> <span class="nav-text">写在最后</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#AppName-Localization"><span class="nav-number">1.</span> <span class="nav-text">AppName Localization</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#String-Localization"><span class="nav-number">2.</span> <span class="nav-text">String Localization</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#正则替换-amp-批量生成"><span class="nav-number">3.</span> <span class="nav-text">正则替换&amp;批量生成</span></a></li></ol></div>
             
 
           </div>
