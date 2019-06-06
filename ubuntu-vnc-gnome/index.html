@@ -97,7 +97,7 @@
 
 
   <meta name="description" content="SSH Login ssh root@ip apt upgrade -y  Gnome 2 Complete installationapt install ubuntu-desktop gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal -y  Incomplete installation apt-get ins">
-<meta name="keywords" content="Ubuntu, linux, Gnome, VNC">
+<meta name="keywords" content="Ubuntu,linux,Gnome,VNC">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Ubuntu VNC Gnome">
 <meta property="og:url" content="http://henvyluk.me/ubuntu-vnc-gnome/index.html">
@@ -246,7 +246,7 @@
       
     
 
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags<span class="badge">3</span></a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags<span class="badge">6</span></a>
 
   </li>
         
@@ -456,11 +456,11 @@
       
 
       
-        <h4 id="SSH-Login"><a href="#SSH-Login" class="headerlink" title="SSH Login"></a>SSH Login</h4><ul>
+        <h3 id="SSH-Login"><a href="#SSH-Login" class="headerlink" title="SSH Login"></a>SSH Login</h3><ul>
 <li><code>ssh root@ip</code></li>
 <li><code>apt upgrade -y</code></li>
 </ul>
-<h4 id="Gnome-2"><a href="#Gnome-2" class="headerlink" title="Gnome 2"></a>Gnome 2</h4><ul>
+<h3 id="Gnome-2"><a href="#Gnome-2" class="headerlink" title="Gnome 2"></a>Gnome 2</h3><ul>
 <li><p>Complete installation<br><code>apt install ubuntu-desktop gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal -y</code></p>
 </li>
 <li><p>Incomplete installation <code>apt-get install --no-install-recommends ubuntu-desktop gnome-panel gnome-settings-daemon metacity nautilus gnome-terminal -y</code></p>
@@ -468,7 +468,7 @@
 </ul>
 <a id="more"></a>
 
-<h4 id="VNC"><a href="#VNC" class="headerlink" title="VNC"></a>VNC</h4><ul>
+<h3 id="VNC"><a href="#VNC" class="headerlink" title="VNC"></a>VNC</h3><ul>
 <li><code>apt install vnc4server -y</code></li>
 <li><code>vncserver :1</code></li>
 <li><code>vncserver -kill :1</code></li>
@@ -478,10 +478,10 @@
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/sh</span><br><span class="line"> 	 </span><br><span class="line"> 	# Uncomment the following two lines for normal desktop:</span><br><span class="line"> 	# unset SESSION_MANAGER</span><br><span class="line"> 	# exec /etc/X11/xinit/xinitrc</span><br><span class="line"> 	 </span><br><span class="line"> 	[ -x /etc/vnc/xstartup ] &amp;&amp; exec /etc/vnc/xstartup</span><br><span class="line"> 	[ -r $HOME/.Xresources ] &amp;&amp; xrdb $HOME/.Xresources</span><br><span class="line"> 	xsetroot -solid grey </span><br><span class="line"> 	vncconfig -iconic &amp;</span><br><span class="line"> 	x-terminal-emulator -geometry 80x24+10+10 -ls -title &quot;$VNCDESKTOP Desktop&quot; &amp;</span><br><span class="line"> 	x-window-manager &amp;</span><br><span class="line"> 	gnome-panel &amp;</span><br><span class="line"> 	gnome-settings-daemon &amp;</span><br><span class="line"> 	metacity &amp;</span><br><span class="line"> 	nautilus &amp;</span><br></pre></td></tr></table></figure>
 
-<h4 id="Mac-VNC"><a href="#Mac-VNC" class="headerlink" title="Mac VNC"></a>Mac VNC</h4><ul>
+<h3 id="Mac-VNC"><a href="#Mac-VNC" class="headerlink" title="Mac VNC"></a>Mac VNC</h3><ul>
 <li><code>ip: displayId</code></li>
 </ul>
-<h4 id="Too-many-security-failures"><a href="#Too-many-security-failures" class="headerlink" title="Too many security failures"></a>Too many security failures</h4><ul>
+<h3 id="Too-many-security-failures"><a href="#Too-many-security-failures" class="headerlink" title="Too many security failures"></a>Too many security failures</h3><ul>
 <li><p>kill vncserver</p>
 <ul>
 <li><code>vncserver -kill :1</code></li>
@@ -521,7 +521,13 @@
         
         <div class="post-tags">
           
-            <a href="/tags/Ubuntu-linux-Gnome-VNC/" rel="tag"># Ubuntu, linux, Gnome, VNC</a>
+            <a href="/tags/Ubuntu/" rel="tag"># Ubuntu</a>
+          
+            <a href="/tags/linux/" rel="tag"># linux</a>
+          
+            <a href="/tags/Gnome/" rel="tag"># Gnome</a>
+          
+            <a href="/tags/VNC/" rel="tag"># VNC</a>
           
         </div>
       
@@ -534,8 +540,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/iOS-localization/" rel="next" title="iOS国际化">
-                <i class="fa fa-chevron-left"></i> iOS国际化
+              <a href="/PSOF&TermsPrivacyPolicy/" rel="next" title="PSOF Terms & Privacy Policy.">
+                <i class="fa fa-chevron-left"></i> PSOF Terms & Privacy Policy.
               </a>
             
           </div>
@@ -646,7 +652,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">3</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -732,7 +744,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#SSH-Login"><span class="nav-number">1.</span> <span class="nav-text">SSH Login</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Gnome-2"><span class="nav-number">2.</span> <span class="nav-text">Gnome 2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#VNC"><span class="nav-number">3.</span> <span class="nav-text">VNC</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Mac-VNC"><span class="nav-number">4.</span> <span class="nav-text">Mac VNC</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Too-many-security-failures"><span class="nav-number">5.</span> <span class="nav-text">Too many security failures</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#SSH-Login"><span class="nav-number">1.</span> <span class="nav-text">SSH Login</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Gnome-2"><span class="nav-number">2.</span> <span class="nav-text">Gnome 2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VNC"><span class="nav-number">3.</span> <span class="nav-text">VNC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mac-VNC"><span class="nav-number">4.</span> <span class="nav-text">Mac VNC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Too-many-security-failures"><span class="nav-number">5.</span> <span class="nav-text">Too many security failures</span></a></li></ol></div>
             
 
           </div>
