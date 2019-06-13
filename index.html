@@ -458,19 +458,228 @@
 
       
         
-          <h3 id="CustomTabBarController"><a href="#CustomTabBarController" class="headerlink" title="CustomTabBarController"></a>CustomTabBarController</h3><ul>
+          
+            <h3 id="CustomTabBarController"><a href="#CustomTabBarController" class="headerlink" title="CustomTabBarController"></a>CustomTabBarController</h3><ul>
 <li>viewDidLoad</li>
 </ul>
-<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.viewDidLoad()</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">let</span> tabBar = <span class="type">CustomTabBar</span>()</span><br><span class="line">        tabBar.delegate = <span class="keyword">self</span></span><br><span class="line">        <span class="keyword">self</span>.setValue(tabBar, forKeyPath: <span class="string">"tabBar"</span>) </span><br><span class="line">        </span><br><span class="line">        <span class="keyword">let</span> vc1 = <span class="type">ViewController</span>()</span><br><span class="line">        <span class="keyword">let</span> nvc1: <span class="type">UINavigationController</span> = <span class="type">NavigationViewController</span>(rootViewController: vc1)</span><br><span class="line">        ...</span><br><span class="line">        ...</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        <span class="keyword">let</span> normalDict: <span class="type">NSDictionary</span> = [<span class="type">NSAttributedStringKey</span>.foregroundColor: <span class="type">UIColor</span>.white, <span class="type">NSAttributedStringKey</span>.font : <span class="type">UIFont</span>.boldSystemFont(ofSize: <span class="number">10</span>)]</span><br><span class="line">        <span class="keyword">let</span> selectedDict: <span class="type">NSDictionary</span> = [<span class="type">NSAttributedStringKey</span>.foregroundColor: <span class="type">UIColor</span>.white, <span class="type">NSAttributedStringKey</span>.font : <span class="type">UIFont</span>.boldSystemFont(ofSize: <span class="number">10</span>)]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> tabbarItem1 = <span class="type">UITabBarItem</span>(title: <span class="type">NSLocalizedString</span>(<span class="string">"xx"</span>, comment: <span class="string">""</span>), image: <span class="type">UIImage</span>(named: <span class="string">"xx.png"</span>), selectedImage: <span class="type">UIImage</span>(named: <span class="string">"xx.png"</span>))</span><br><span class="line">        psdetailTabbar.setTitleTextAttributes((normalDict <span class="keyword">as</span>! [<span class="type">NSAttributedStringKey</span> : <span class="type">Any</span>]), <span class="keyword">for</span>: .normal)</span><br><span class="line">        psdetailTabbar.setTitleTextAttributes((selectedDict <span class="keyword">as</span>! [<span class="type">NSAttributedStringKey</span> : <span class="type">Any</span>]), <span class="keyword">for</span>: .selected)</span><br><span class="line">        ...</span><br><span class="line">        ...</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        nvc1.tabBarItem = tabbarItem1</span><br><span class="line">        ...</span><br><span class="line">        ...</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        <span class="keyword">self</span>.viewControllers = [nvc1,...]</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> vc <span class="keyword">in</span> (<span class="keyword">self</span>.viewControllers?.enumerated())! &#123;</span><br><span class="line">            <span class="keyword">let</span> nvc = vc.element <span class="keyword">as</span>! <span class="type">NavigationViewController</span></span><br><span class="line">            nvc.navigationBar.barTintColor = <span class="type">UIColor</span>.white</span><br><span class="line">            nvc.viewControllers.first?.view.backgroundColor = <span class="type">UIColor</span>.white</span><br><span class="line">            <span class="keyword">let</span> bgView = <span class="type">UIImageView</span>(frame: <span class="type">UIScreen</span>.main.bounds)</span><br><span class="line">            bgView.image = <span class="type">UIImage</span>(named: <span class="string">"home_bg"</span>)</span><br><span class="line">            nvc.viewControllers.first?.view.addSubview(bgView)</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> (<span class="keyword">self</span>.tabBar.items?.enumerated())! &#123;</span><br><span class="line">            <span class="comment">//item.element.imageInsets = UIEdgeInsetsMake(7, 0, -7, 0)</span></span><br><span class="line">            item.element.image = item.element.image?.withRenderingMode(.alwaysOriginal)</span><br><span class="line">            item.element.selectedImage = item.element.selectedImage?.withRenderingMode(.alwaysOriginal)</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</span><br><span class="line">        <span class="keyword">super</span>.viewDidLoad()</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">let</span> tabBar = <span class="type">CustomTabBar</span>()</span><br><span class="line">        tabBar.delegate = <span class="keyword">self</span></span><br><span class="line">        <span class="keyword">self</span>.setValue(tabBar, forKeyPath: <span class="string">"tabBar"</span>) </span><br><span class="line">        </span><br><span class="line">        <span class="keyword">let</span> vc1 = <span class="type">ViewController</span>()</span><br><span class="line">        <span class="keyword">let</span> nvc1: <span class="type">UINavigationController</span> = <span class="type">NavigationViewController</span>(rootViewController: vc1)</span><br><span class="line">        ...</span><br><span class="line">        ...</span><br><span class="line">        </span><br><span class="line">    &lt;!-- more --&gt;</span><br><span class="line">     </span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        <span class="keyword">let</span> normalDict: <span class="type">NSDictionary</span> = [<span class="type">NSAttributedStringKey</span>.foregroundColor: <span class="type">UIColor</span>.white, <span class="type">NSAttributedStringKey</span>.font : <span class="type">UIFont</span>.boldSystemFont(ofSize: <span class="number">10</span>)]</span><br><span class="line">        <span class="keyword">let</span> selectedDict: <span class="type">NSDictionary</span> = [<span class="type">NSAttributedStringKey</span>.foregroundColor: <span class="type">UIColor</span>.white, <span class="type">NSAttributedStringKey</span>.font : <span class="type">UIFont</span>.boldSystemFont(ofSize: <span class="number">10</span>)]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> tabbarItem1 = <span class="type">UITabBarItem</span>(title: <span class="type">NSLocalizedString</span>(<span class="string">"xx"</span>, comment: <span class="string">""</span>), image: <span class="type">UIImage</span>(named: <span class="string">"xx.png"</span>), selectedImage: <span class="type">UIImage</span>(named: <span class="string">"xx.png"</span>))</span><br><span class="line">        psdetailTabbar.setTitleTextAttributes((normalDict <span class="keyword">as</span>! [<span class="type">NSAttributedStringKey</span> : <span class="type">Any</span>]), <span class="keyword">for</span>: .normal)</span><br><span class="line">        psdetailTabbar.setTitleTextAttributes((selectedDict <span class="keyword">as</span>! [<span class="type">NSAttributedStringKey</span> : <span class="type">Any</span>]), <span class="keyword">for</span>: .selected)</span><br><span class="line">        ...</span><br><span class="line">        ...</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        nvc1.tabBarItem = tabbarItem1</span><br><span class="line">        ...</span><br><span class="line">        ...</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">        <span class="keyword">self</span>.viewControllers = [nvc1,...]</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> vc <span class="keyword">in</span> (<span class="keyword">self</span>.viewControllers?.enumerated())! &#123;</span><br><span class="line">            <span class="keyword">let</span> nvc = vc.element <span class="keyword">as</span>! <span class="type">NavigationViewController</span></span><br><span class="line">            nvc.navigationBar.barTintColor = <span class="type">UIColor</span>.white</span><br><span class="line">            nvc.viewControllers.first?.view.backgroundColor = <span class="type">UIColor</span>.white</span><br><span class="line">            <span class="keyword">let</span> bgView = <span class="type">UIImageView</span>(frame: <span class="type">UIScreen</span>.main.bounds)</span><br><span class="line">            bgView.image = <span class="type">UIImage</span>(named: <span class="string">"home_bg"</span>)</span><br><span class="line">            nvc.viewControllers.first?.view.addSubview(bgView)</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> (<span class="keyword">self</span>.tabBar.items?.enumerated())! &#123;</span><br><span class="line">            <span class="comment">//item.element.imageInsets = UIEdgeInsetsMake(7, 0, -7, 0)</span></span><br><span class="line">            item.element.image = item.element.image?.withRenderingMode(.alwaysOriginal)</span><br><span class="line">            item.element.selectedImage = item.element.selectedImage?.withRenderingMode(.alwaysOriginal)</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="CustomTabBar"><a href="#CustomTabBar" class="headerlink" title="CustomTabBar"></a>CustomTabBar</h3><ul>
 <li>init</li>
 </ul>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="keyword">init</span>(frame: <span class="type">CGRect</span>) &#123;</span><br><span class="line">        <span class="keyword">super</span>.<span class="keyword">init</span>(frame: frame)</span><br><span class="line">        <span class="keyword">let</span> btn = <span class="type">CustomButton</span>()</span><br><span class="line">        <span class="keyword">self</span>.addSubview(btn)</span><br><span class="line">        btn.addTarget(<span class="keyword">self</span>, action: #selector(clickPublish), <span class="keyword">for</span>: .touchUpInside)</span><br><span class="line">        <span class="keyword">self</span>.publishButton = btn</span><br><span class="line">        <span class="keyword">self</span>.barTintColor = <span class="type">UIColor</span>.navBgColor()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>layoutSubviews</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">layoutSubviews</span><span class="params">()</span></span> &#123;</span><br><span class="line">      <span class="keyword">super</span>.layoutSubviews()</span><br><span class="line"></span><br><span class="line">      <span class="keyword">let</span> buttonW = barWidth / <span class="number">5</span></span><br><span class="line">      <span class="keyword">let</span> buttonH = barHeight</span><br><span class="line">      <span class="keyword">let</span> buttonY = <span class="number">0</span></span><br><span class="line">      <span class="keyword">var</span> buttonIndex: <span class="type">CGFloat</span> = <span class="number">0</span></span><br><span class="line">      </span><br><span class="line">      <span class="keyword">self</span>.publishButton.frame = <span class="type">CGRect</span>(x: <span class="number">0</span>, y: <span class="number">0</span>, width: buttonW, height: buttonH)</span><br><span class="line">      <span class="keyword">self</span>.publishButton.center = <span class="type">CGPoint</span>(x: buttonW * <span class="number">0.5</span>, y: barHeight * <span class="number">0.5</span>)</span><br><span class="line">      </span><br><span class="line">      <span class="keyword">for</span> view <span class="keyword">in</span> <span class="keyword">self</span>.subviews.enumerated() &#123;</span><br><span class="line">          <span class="keyword">if</span> !view.element.isKind(of: <span class="type">NSClassFromString</span>(<span class="string">"UITabBarButton"</span>)!)&#123;</span><br><span class="line">              <span class="keyword">continue</span></span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">let</span> buttonX = buttonW * ((buttonIndex &gt;= <span class="number">0</span>) ? (buttonIndex + <span class="number">1</span>) : buttonIndex)</span><br><span class="line">          <span class="keyword">if</span> <span class="type">UIDevice</span>.current.modelName == <span class="string">"iPhone X"</span> || <span class="type">UIDevice</span>.current.modelName == <span class="string">"iPhone XS"</span> || <span class="type">UIDevice</span>.current.modelName == <span class="string">"iPhone XS Max"</span> || <span class="type">UIDevice</span>.current.modelName == <span class="string">"iPhone XR"</span> &#123;</span><br><span class="line">              view.element.frame = <span class="type">CGRect</span>(x: buttonX, y: <span class="type">CGFloat</span>(buttonY), width: buttonW, height: <span class="number">49</span>)</span><br><span class="line">          &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">              view.element.frame = <span class="type">CGRect</span>(x: buttonX, y: <span class="type">CGFloat</span>(buttonY), width: buttonW, height: buttonH)</span><br><span class="line">          &#125;</span><br><span class="line">          buttonIndex += <span class="number">1</span></span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="CustomButton"><a href="#CustomButton" class="headerlink" title="CustomButton"></a>CustomButton</h3><ul>
+<li>init</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="keyword">init</span>(frame: <span class="type">CGRect</span>) &#123;</span><br><span class="line">        <span class="keyword">super</span>.<span class="keyword">init</span>(frame: frame)</span><br><span class="line">        <span class="keyword">self</span>.titleLabel?.textAlignment = .center</span><br><span class="line">        <span class="keyword">self</span>.titleLabel?.font = <span class="type">UIFont</span>.boldSystemFont(ofSize: <span class="number">10</span>)</span><br><span class="line">        <span class="keyword">self</span>.setImage(<span class="type">UIImage</span>(named: <span class="string">"tabbar_home_unselected"</span>), <span class="keyword">for</span>: .normal)</span><br><span class="line">        <span class="keyword">self</span>.setTitle(<span class="type">NSLocalizedString</span>(<span class="string">"xx"</span>, comment: <span class="string">""</span>), <span class="keyword">for</span>: .normal)</span><br><span class="line">        <span class="keyword">self</span>.setTitleColor(<span class="type">UIColor</span>.shadowTextColor(), <span class="keyword">for</span>: .normal)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>titleRect</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">titleRect</span><span class="params">(forContentRect contentRect: CGRect)</span></span> -&gt; <span class="type">CGRect</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> space = <span class="type">CGFloat</span>(<span class="number">2</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">let</span> titleW = contentRect.width</span><br><span class="line">        <span class="keyword">let</span> titleH = <span class="type">CGFloat</span>(<span class="number">12</span>)</span><br><span class="line">        <span class="keyword">let</span> titleX = <span class="number">0</span></span><br><span class="line">        <span class="keyword">let</span> titleY = <span class="type">CGFloat</span>(<span class="number">49</span>) - space - titleH</span><br><span class="line">        <span class="keyword">return</span> <span class="type">CGRect</span>(x: <span class="type">CGFloat</span>(titleX), y: titleY, width: titleW, height: titleH)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>imageRect</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">imageRect</span><span class="params">(forContentRect contentRect: CGRect)</span></span> -&gt; <span class="type">CGRect</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> space = <span class="type">CGFloat</span>(<span class="number">5</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">let</span> imageH = <span class="type">CGFloat</span>(<span class="number">24.5</span>)</span><br><span class="line">        <span class="keyword">let</span> imageW = imageH</span><br><span class="line">        <span class="keyword">let</span> imageX = (contentRect.width - imageH)/<span class="number">2</span></span><br><span class="line">        <span class="keyword">let</span> imageY = space</span><br><span class="line">        <span class="keyword">return</span> <span class="type">CGRect</span>(x: imageX, y: imageY, width: imageW, height: imageH)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://henvyluk.me/SSGenerate/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="henvy">
+      <meta itemprop="description" content="iOS Developer">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Henvy's Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/SSGenerate/" class="post-title-link" itemprop="url">SSGenerate</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-06-06 00:00:00" itemprop="dateCreated datePublished" datetime="2019-06-06T00:00:00+08:00">2019-06-06</time>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/SSGenerate/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/SSGenerate/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/SSGenerate/" class="leancloud_visitors" data-flag-title="SSGenerate">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Views: </span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Symbols count in article: </span>
+                
+                <span title="Symbols count in article">554</span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="Mac-finalShell"><a href="#Mac-finalShell" class="headerlink" title="Mac finalShell"></a>Mac finalShell</h3><ul>
+<li>execute<code>ssh-keygen -t rsa -f rsaSavePath -C whoiam</code></li>
+<li>add .pub(full txt) to GCP sshkey</li>
+<li>finalShell add rsa path</li>
+</ul>
+<h3 id="Mac-terminal"><a href="#Mac-terminal" class="headerlink" title="Mac terminal"></a>Mac terminal</h3><ul>
+<li><code>ssh -i rsaSavePath whoiam@ip</code></li>
+</ul>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/CustomTabBar/#more" rel="contents">
+              <a class="btn" href="/SSGenerate/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -662,200 +871,6 @@
           
             <div class="post-button text-center">
               <a class="btn" href="/iOS-localization/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://henvyluk.me/SSGenerate/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="henvy">
-      <meta itemprop="description" content="iOS Developer">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Henvy's Notes">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/SSGenerate/" class="post-title-link" itemprop="url">SSGenerate</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2019-06-06 00:00:00" itemprop="dateCreated datePublished" datetime="2019-06-06T00:00:00+08:00">2019-06-06</time>
-            
-
-            
-          </span>
-
-          
-
-          
-            
-            
-              
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-            
-                <span class="post-meta-item-text">Comments: </span>
-                <a href="/SSGenerate/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/SSGenerate/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-            <span id="/SSGenerate/" class="leancloud_visitors" data-flag-title="SSGenerate">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Views: </span>
-              
-                <span class="leancloud-visitors-count"></span>
-            </span>
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Symbols count in article: </span>
-                
-                <span title="Symbols count in article">554</span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="Mac-finalShell"><a href="#Mac-finalShell" class="headerlink" title="Mac finalShell"></a>Mac finalShell</h3><ul>
-<li>execute<code>ssh-keygen -t rsa -f rsaSavePath -C whoiam</code></li>
-<li>add .pub(full txt) to GCP sshkey</li>
-<li>finalShell add rsa path</li>
-</ul>
-<h3 id="Mac-terminal"><a href="#Mac-terminal" class="headerlink" title="Mac terminal"></a>Mac terminal</h3><ul>
-<li><code>ssh -i rsaSavePath whoiam@ip</code></li>
-</ul>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/SSGenerate/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
