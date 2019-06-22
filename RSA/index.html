@@ -97,16 +97,16 @@
 
 
   <meta name="description" content="Publickey、Privatekey、Certificate12345678910111213openssl genrsa -out private_key.pem 1024 //original keyopenssl req -new -key private_key.pem -out rsaCertReq.csr openssl x509 -req -days 3650 -in rsaCe">
-<meta name="keywords" content="iOS,RSA,base64,MD5">
+<meta name="keywords" content="iOS,RSA,base64,MD5,非对称加密">
 <meta property="og:type" content="article">
-<meta property="og:title" content="iOS RSA">
+<meta property="og:title" content="iOS非对称RSA加密">
 <meta property="og:url" content="http://henvyluk.me/RSA/index.html">
 <meta property="og:site_name" content="Henvy&#39;s Notes">
 <meta property="og:description" content="Publickey、Privatekey、Certificate12345678910111213openssl genrsa -out private_key.pem 1024 //original keyopenssl req -new -key private_key.pem -out rsaCertReq.csr openssl x509 -req -days 3650 -in rsaCe">
 <meta property="og:locale" content="en">
 <meta property="og:updated_time" content="2019-06-19T16:00:00.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="iOS RSA">
+<meta name="twitter:title" content="iOS非对称RSA加密">
 <meta name="twitter:description" content="Publickey、Privatekey、Certificate12345678910111213openssl genrsa -out private_key.pem 1024 //original keyopenssl req -new -key private_key.pem -out rsaCertReq.csr openssl x509 -req -days 3650 -in rsaCe">
 
 
@@ -125,7 +125,7 @@
   };
 </script>
 
-  <title>iOS RSA | Henvy's Notes</title>
+  <title>iOS非对称RSA加密 | Henvy's Notes</title>
   
 
 
@@ -246,7 +246,7 @@
       
     
 
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags<span class="badge">11</span></a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags<span class="badge">12</span></a>
 
   </li>
         
@@ -353,7 +353,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">iOS RSA
+          <h1 class="post-title" itemprop="name headline">iOS非对称RSA加密
 
               
             
@@ -407,7 +407,7 @@
 
           
           
-            <span id="/RSA/" class="leancloud_visitors" data-flag-title="iOS RSA">
+            <span id="/RSA/" class="leancloud_visitors" data-flag-title="iOS非对称RSA加密">
               <span class="post-meta-divider">|</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
@@ -432,7 +432,7 @@
                 
                   <span class="post-meta-item-text">Symbols count in article: </span>
                 
-                <span title="Symbols count in article">11k</span>
+                <span title="Symbols count in article">15k</span>
               
 
               
@@ -506,6 +506,20 @@
 <li>File</li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">public func md5_File() -&gt; String? &#123;</span><br><span class="line">        guard let fileHandle = FileHandle(forReadingAtPath: self) else &#123;</span><br><span class="line">            return nil</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        let ctx = UnsafeMutablePointer&lt;CC_MD5_CTX&gt;.allocate(capacity: MemoryLayout&lt;CC_MD5_CTX&gt;.size)</span><br><span class="line">        </span><br><span class="line">        CC_MD5_Init(ctx)</span><br><span class="line">        </span><br><span class="line">        var done = false</span><br><span class="line">        </span><br><span class="line">        while !done &#123;</span><br><span class="line">            let fileData = fileHandle.readData(ofLength: 256)</span><br><span class="line">            fileData.withUnsafeBytes &#123;(bytes: UnsafePointer&lt;CChar&gt;) -&gt; () in</span><br><span class="line">                /// Use `bytes` inside this closure</span><br><span class="line">                CC_MD5_Update(ctx, bytes, CC_LONG(fileData.count))</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            if fileData.count == 0 &#123;</span><br><span class="line">                done = true</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        let digest = Int(CC_MD5_DIGEST_LENGTH)</span><br><span class="line">        let result = UnsafeMutablePointer&lt;CUnsignedChar&gt;.allocate(capacity: digest)</span><br><span class="line">        CC_MD5_Final(result, ctx);</span><br><span class="line">        </span><br><span class="line">        var hash = &quot;&quot;</span><br><span class="line">        for i in 0..&lt;digest &#123;</span><br><span class="line">            hash +=  String(format: &quot;%02x&quot;, (result[i]))</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        free(result)</span><br><span class="line">        free(ctx)</span><br><span class="line">        </span><br><span class="line">        return hash;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="RSA分段加密"><a href="#RSA分段加密" class="headerlink" title="RSA分段加密"></a>RSA分段加密</h3><ul>
+<li>RSAEncrypt</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public class func rsaEncrypt(_ publicKeyPath: String?, _ string: String, _ completion: ((_ encryptedString: String?) -&gt; ())?) &#123;</span><br><span class="line">       guard let encryptData = string.data(using: String.Encoding.utf8) else &#123;</span><br><span class="line">           print(&quot;String to be encrypted is nil&quot;)</span><br><span class="line">           completion?(nil)</span><br><span class="line">           return</span><br><span class="line">       &#125;</span><br><span class="line">       </span><br><span class="line">       rsaEncrypt(publicKeyPath, encryptData) &#123; (data) in</span><br><span class="line">           guard let encryptedData = data else &#123;</span><br><span class="line">               completion?(nil)</span><br><span class="line">               return</span><br><span class="line">           &#125;</span><br><span class="line">           </span><br><span class="line">           completion?(encryptedData.base64String)</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">public class func rsaEncrypt(_ publicKeyPath: String?, _ data: Data?, _ completion: ((_ encryptedData: Data?) -&gt; ())?) &#123;</span><br><span class="line">       guard let pkPath = publicKeyPath,</span><br><span class="line">           let pkRef = loadPublicKey(pkPath),</span><br><span class="line">           let dt = data else &#123;</span><br><span class="line">               print(&quot;path of public key is nil.&quot;)</span><br><span class="line">               completion?(nil)</span><br><span class="line">               return</span><br><span class="line">       &#125;</span><br><span class="line">       let blockLen =  SecKeyGetBlockSize(pkRef)</span><br><span class="line">       var outBuf = [UInt8](repeating: 0, count: blockLen)</span><br><span class="line">       var outBufLen:Int = blockLen</span><br><span class="line">       var index = 0</span><br><span class="line">       let totalLen = dt.count</span><br><span class="line">       let resData = NSMutableData()</span><br><span class="line">       </span><br><span class="line">       while index &lt; totalLen &#123;</span><br><span class="line">           var curDataLen = totalLen - index</span><br><span class="line">           if curDataLen &gt; blockLen - 11 &#123;</span><br><span class="line">               curDataLen = blockLen - 11</span><br><span class="line">           &#125;</span><br><span class="line">           let curData: NSData = dt.subdata(in: Range(NSRange(location: index, length: curDataLen))!) as NSData</span><br><span class="line">           let status: OSStatus = SecKeyEncrypt(pkRef, SecPadding.PKCS1, curData.bytes.assumingMemoryBound(to: UInt8.self), curData.length, &amp;outBuf, &amp;outBufLen)</span><br><span class="line">           </span><br><span class="line">           if status == noErr &#123;</span><br><span class="line">               resData.append(outBuf, length: outBufLen)</span><br><span class="line">           &#125;else&#123;</span><br><span class="line">               print(&quot;encrypt status = \(status)&quot;)</span><br><span class="line">           &#125;</span><br><span class="line">           </span><br><span class="line">           index += curDataLen</span><br><span class="line">       &#125;</span><br><span class="line">       completion?(resData as Data)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>RSADecrypt</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public class func rsaDecrypt(_ privateKeyPath: String?, _ password: String, _ string: String?, _ completion: ((_ encryptedString: String?) -&gt; ())?) &#123;</span><br><span class="line">      guard let str = string,</span><br><span class="line">          let decryptData = Data(base64Encoded: str) else &#123;</span><br><span class="line">              print(&quot;String to be decrypted is nil&quot;)</span><br><span class="line">              completion?(nil)</span><br><span class="line">              return</span><br><span class="line">      &#125;</span><br><span class="line">      </span><br><span class="line">      rsaDecrypt(privateKeyPath, password, decryptData) &#123; (data) in</span><br><span class="line">          guard let decryptedData = data else &#123;</span><br><span class="line">              completion?(nil)</span><br><span class="line">              return</span><br><span class="line">          &#125;</span><br><span class="line">          </span><br><span class="line">          completion?(String(data: decryptedData, encoding: String.Encoding.utf8))</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">public class func rsaDecrypt(_ privateKeyPath: String?, _ password: String, _ data: Data?, _ completion: ((_ encryptedData: Data?) -&gt; ())?) &#123;</span><br><span class="line">       guard let pkPath = privateKeyPath,</span><br><span class="line">           let pkRef = loadPrivateKey(pkPath, password),</span><br><span class="line">           let dt = data else &#123;</span><br><span class="line">               print(&quot;path of private key is nil.&quot;)</span><br><span class="line">               completion?(nil)</span><br><span class="line">               return</span><br><span class="line">       &#125;</span><br><span class="line">       let blockLen = SecKeyGetBlockSize(pkRef)</span><br><span class="line">       let outBuf = UnsafeMutablePointer&lt;UInt8&gt;.allocate(capacity: blockLen)</span><br><span class="line">       defer &#123;</span><br><span class="line">           outBuf.deallocate()</span><br><span class="line">       &#125;</span><br><span class="line">       var outBufLen: Int = blockLen</span><br><span class="line">       var index = 0</span><br><span class="line">       let totalLen = dt.count</span><br><span class="line">       let resData = NSMutableData()</span><br><span class="line">       </span><br><span class="line">       while index &lt; totalLen &#123;</span><br><span class="line">           var curDataLen = totalLen - index</span><br><span class="line">           if curDataLen  &gt; blockLen &#123;</span><br><span class="line">               curDataLen = blockLen</span><br><span class="line">           &#125;</span><br><span class="line">           let curData: Data = dt.subdata(in: index ..&lt; index + curDataLen)</span><br><span class="line">           var status:OSStatus = noErr</span><br><span class="line">           curData.withUnsafeBytes &#123; (bytes:UnsafePointer&lt;UInt8&gt;) in</span><br><span class="line">               //print(bytes)</span><br><span class="line">               status = SecKeyDecrypt(pkRef, SecPadding.PKCS1, bytes, curData.count, outBuf, &amp;outBufLen)</span><br><span class="line">           &#125;</span><br><span class="line">           </span><br><span class="line">           if status == noErr &#123;</span><br><span class="line">               resData.append(outBuf, length: outBufLen)</span><br><span class="line">           &#125;else&#123;</span><br><span class="line">               print(&quot;decrypt status = \(status)&quot;)</span><br><span class="line">           &#125;</span><br><span class="line">           index += curDataLen</span><br><span class="line">       &#125;</span><br><span class="line">       completion?(resData as Data)</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -538,6 +552,8 @@
             <a href="/tags/base64/" rel="tag"># base64</a>
           
             <a href="/tags/MD5/" rel="tag"># MD5</a>
+          
+            <a href="/tags/非对称加密/" rel="tag"># 非对称加密</a>
           
         </div>
       
@@ -674,7 +690,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">11</span>
+                      
+                    
+                    <span class="site-state-item-count">12</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -760,7 +778,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Publickey、Privatekey、Certificate"><span class="nav-number">1.</span> <span class="nav-text">Publickey、Privatekey、Certificate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iOS-RSA"><span class="nav-number">2.</span> <span class="nav-text">iOS RSA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Base64"><span class="nav-number">3.</span> <span class="nav-text">Base64</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MD5"><span class="nav-number">4.</span> <span class="nav-text">MD5</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Publickey、Privatekey、Certificate"><span class="nav-number">1.</span> <span class="nav-text">Publickey、Privatekey、Certificate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iOS-RSA"><span class="nav-number">2.</span> <span class="nav-text">iOS RSA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Base64"><span class="nav-number">3.</span> <span class="nav-text">Base64</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MD5"><span class="nav-number">4.</span> <span class="nav-text">MD5</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RSA分段加密"><span class="nav-number">5.</span> <span class="nav-text">RSA分段加密</span></a></li></ol></div>
             
 
           </div>
