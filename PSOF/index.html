@@ -96,17 +96,41 @@
 
 
 
-  <meta name="description" content="前言由于项目需求，看了看关于js和webview交互的一些东西，由于以前没接触过这块，算是自己的一个盲区，因此记录下来，代码实现的过程很简短。">
+  <meta name="description" content="###  Login&amp;amp;Registration">
+<meta name="keywords" content="iOS,PSOF">
 <meta property="og:type" content="article">
-<meta property="og:title" content="实现Webview的看图模式">
-<meta property="og:url" content="http://henvyluk.me/WebviewPictureMode/index.html">
+<meta property="og:title" content="PSOF">
+<meta property="og:url" content="http://henvyluk.me/PSOF/index.html">
 <meta property="og:site_name" content="Henvy&#39;s Notes">
-<meta property="og:description" content="前言由于项目需求，看了看关于js和webview交互的一些东西，由于以前没接触过这块，算是自己的一个盲区，因此记录下来，代码实现的过程很简短。">
+<meta property="og:description" content="###  Login&amp;amp;Registration">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2017-02-08T16:00:00.000Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3286386-beb6bd307723bd96.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3286386-697b3e5af278097e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3286386-87aa2ba68a89c4d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3286386-a2e4ae3efc6c9a83.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3286386-8034642229677a71.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3286386-2313ed2c6f8ea3df.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3286386-9f5f8c2bcc5b6b91.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3286386-97d27e4625c63319.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3286386-d723fd60c3da0dbb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3286386-bfe17347a5f30555.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3286386-23c3bb10f3d11226.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3286386-23320e4f6bb405cd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3286386-ec752d593b3d1d51.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3286386-ab8b230028a506de.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3286386-22e302a78c92fbe1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3286386-21f1825bcb7ae528.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3286386-68ac11b232aa81b3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3286386-ffa209d23dd8ae03.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3286386-08947989db785d7e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3286386-9da5ef455d1ce330.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3286386-54ca9fcfb9b4d14c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3286386-bc18193f29010d22.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2016-08-17T16:00:00.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="实现Webview的看图模式">
-<meta name="twitter:description" content="前言由于项目需求，看了看关于js和webview交互的一些东西，由于以前没接触过这块，算是自己的一个盲区，因此记录下来，代码实现的过程很简短。">
+<meta name="twitter:title" content="PSOF">
+<meta name="twitter:description" content="###  Login&amp;amp;Registration">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3286386-beb6bd307723bd96.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -114,7 +138,7 @@
 
   
   
-  <link rel="canonical" href="http://henvyluk.me/WebviewPictureMode/">
+  <link rel="canonical" href="http://henvyluk.me/PSOF/">
 
 
 
@@ -124,7 +148,7 @@
   };
 </script>
 
-  <title>实现Webview的看图模式 | Henvy's Notes</title>
+  <title>PSOF | Henvy's Notes</title>
   
 
 
@@ -335,7 +359,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://henvyluk.me/WebviewPictureMode/">
+    <link itemprop="mainEntityOfPage" href="http://henvyluk.me/PSOF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="henvy">
@@ -352,7 +376,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">实现Webview的看图模式
+          <h1 class="post-title" itemprop="name headline">PSOF
 
               
             
@@ -378,7 +402,7 @@
                 
               
 
-              <time title="Created: 2017-02-09 00:00:00" itemprop="dateCreated datePublished" datetime="2017-02-09T00:00:00+08:00">2017-02-09</time>
+              <time title="Created: 2016-08-18 00:00:00" itemprop="dateCreated datePublished" datetime="2016-08-18T00:00:00+08:00">2016-08-18</time>
             
 
             
@@ -397,8 +421,8 @@
                 </span>
             
                 <span class="post-meta-item-text">Comments: </span>
-                <a href="/WebviewPictureMode/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/WebviewPictureMode/" itemprop="commentCount"></span>
+                <a href="/PSOF/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/PSOF/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -406,7 +430,7 @@
 
           
           
-            <span id="/WebviewPictureMode/" class="leancloud_visitors" data-flag-title="实现Webview的看图模式">
+            <span id="/PSOF/" class="leancloud_visitors" data-flag-title="PSOF">
               <span class="post-meta-divider">|</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
@@ -431,7 +455,7 @@
                 
                   <span class="post-meta-item-text">Symbols count in article: </span>
                 
-                <span title="Symbols count in article">2.7k</span>
+                <span title="Symbols count in article">64</span>
               
 
               
@@ -455,74 +479,19 @@
       
 
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>由于项目需求，看了看关于js和webview交互的一些东西，由于以前没接触过这块，算是自己的一个盲区，因此记录下来，代码实现的过程很简短。</p>
+        <p>### </p>
+<h4 id="Login-amp-Registration"><a href="#Login-amp-Registration" class="headerlink" title="Login&amp;Registration"></a>Login&amp;Registration</h4><p><img src="https://upload-images.jianshu.io/upload_images/3286386-beb6bd307723bd96.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="登录注册.png"></p>
 <a id="more"></a>
 
-<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p>###1、获取 <code>&lt;img&gt;</code> 元素<br>在webview的代理方法<code>webViewDidFinishLoad</code>中用js实现对页面图片URL数组的获取：</p>
-<pre><code>static  NSString *const jsGetImages =
-@&quot;function getImages(){\
-var objs = document.getElementsByTagName(\&quot;img\&quot;);\
-var imgScr = &apos;&apos;;\
-for(var i=0;i&lt;objs.length;i++){\
-imgScr = imgScr + objs[i].src + &apos;+&apos;;\
-};\
-return imgScr;\
-};&quot;;
-//注入js方法
-[webView stringByEvaluatingJavaScriptFromString:jsGetImages];
-NSString *urlResurlt = [webView stringByEvaluatingJavaScriptFromString:@&quot;getImages()&quot;];</code></pre><p>urlResurlt获取到的是URL字符串，将其拆分到数组：</p>
-<pre><code>_mUrlArray = [NSMutableArray arrayWithArray:[urlResurlt componentsSeparatedByString:@&quot;+&quot;]];
-//去除最后一个空元素
-if (_mUrlArray.count &gt;= 2) {
-    [_mUrlArray removeLastObject];
-}</code></pre><p>###2、添加图片可点击js</p>
-<pre><code>[_webView stringByEvaluatingJavaScriptFromString:@&quot;function registerImageClickAction(){\
- var imgs=document.getElementsByTagName(&apos;img&apos;);\
- var length=imgs.length;\
- for(var i=0;i&lt;length;i++){\
- img=imgs[i];\
- img.onclick=function(){\
- window.location.href=&apos;image-preview:&apos;+this.src}\
- }\
- }&quot;];
-[_webView stringByEvaluatingJavaScriptFromString:@&quot;registerImageClickAction();&quot;];</code></pre><p>###3、捕获到图片的点击事件<br>在webView的<code>shouldStartLoadWithRequest</code>代理方法中获取被点击图片的url：</p>
-<pre><code>- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+<p><img src="https://upload-images.jianshu.io/upload_images/3286386-697b3e5af278097e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="注册.png"><br><img src="https://upload-images.jianshu.io/upload_images/3286386-87aa2ba68a89c4d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="验证.png"><br><img src="https://upload-images.jianshu.io/upload_images/3286386-a2e4ae3efc6c9a83.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="头像.png"><br><img src="https://upload-images.jianshu.io/upload_images/3286386-8034642229677a71.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="用户名.png"></p>
+<h4 id="Home"><a href="#Home" class="headerlink" title="Home"></a>Home</h4><p><img src="https://upload-images.jianshu.io/upload_images/3286386-2313ed2c6f8ea3df.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="分享主页.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3286386-9f5f8c2bcc5b6b91.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="主页.png"></p>
+<h4 id="Search"><a href="#Search" class="headerlink" title="Search"></a>Search</h4><p><img src="https://upload-images.jianshu.io/upload_images/3286386-97d27e4625c63319.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="推荐.png"></p>
+<h4 id="Post"><a href="#Post" class="headerlink" title="Post"></a>Post</h4><p><img src="https://upload-images.jianshu.io/upload_images/3286386-d723fd60c3da0dbb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="图库.png"><br><img src="https://upload-images.jianshu.io/upload_images/3286386-bfe17347a5f30555.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="分享.png"><br><img src="https://upload-images.jianshu.io/upload_images/3286386-23c3bb10f3d11226.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="更多工具.png"><br><img src="https://upload-images.jianshu.io/upload_images/3286386-23320e4f6bb405cd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="虚化.png"><br><img src="https://upload-images.jianshu.io/upload_images/3286386-ec752d593b3d1d51.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="颜色.png"><br><img src="https://upload-images.jianshu.io/upload_images/3286386-ab8b230028a506de.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="编辑工具.png"><br><img src="https://upload-images.jianshu.io/upload_images/3286386-22e302a78c92fbe1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="旋转透视等.png"><br><img src="https://upload-images.jianshu.io/upload_images/3286386-21f1825bcb7ae528.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="滤镜.png"><br><img src="https://upload-images.jianshu.io/upload_images/3286386-68ac11b232aa81b3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="其他工具.png"></p>
+<h4 id="Chat"><a href="#Chat" class="headerlink" title="Chat"></a>Chat</h4><p><img src="https://upload-images.jianshu.io/upload_images/3286386-ffa209d23dd8ae03.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="聊天界面.png"></p>
+<h4 id="My"><a href="#My" class="headerlink" title="My"></a>My</h4><p><img src="https://upload-images.jianshu.io/upload_images/3286386-08947989db785d7e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="个人主页.png"><br><img src="https://upload-images.jianshu.io/upload_images/3286386-9da5ef455d1ce330.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="设置.png"><br><img src="https://upload-images.jianshu.io/upload_images/3286386-54ca9fcfb9b4d14c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="关于自己.png"></p>
+<h4 id="Screen"><a href="#Screen" class="headerlink" title="Screen"></a>Screen</h4><p><img src="https://upload-images.jianshu.io/upload_images/3286386-bc18193f29010d22.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Screen.png"></p>
 
-if ([request.URL.scheme isEqualToString:@&quot;image-preview&quot;]) {
-    NSString* path = [request.URL.absoluteString substringFromIndex:[@&quot;image-preview:&quot; length]];
-    path = [path stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    //path 就是被点击图片的url
-    [self loadPhotoWith:path];
-    return NO;
-}
-return YES;
-}</code></pre><p>###4、显示图片<br>这里我用的是IDMPhotoBrowser：</p>
-<pre><code> - (void)loadPhotoWith: (NSString *)path {
-// URLs array
-__block NSInteger index;//图片点击的序号
-NSMutableArray *photosURL = [NSMutableArray array];
-[_mUrlArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-    NSURL *url = [NSURL URLWithString:obj];
-    [photosURL addObject:url];
-    if ([path isEqualToString:obj]) {
-         index = idx;
-    }
-}];
-
-// Create an array to store IDMPhoto objects
-NSMutableArray *photos = [NSMutableArray new];
-
-for (NSURL *url in photosURL) {
-    IDMPhoto *photo = [IDMPhoto photoWithURL:url];
-    [photos addObject:photo];
-}
-IDMPhotoBrowser *browser = [[IDMPhotoBrowser alloc] initWithPhotos:photos];
-browser.displayCounterLabel = YES;
-browser.displayActionButton = NO;
-browser.displayArrowButton = YES;
-[browser setInitialPageIndex:index];
-[self presentViewController:browser animated:YES completion:nil];
-}</code></pre>
       
     </div>
 
@@ -543,6 +512,17 @@ browser.displayArrowButton = YES;
 
     <footer class="post-footer">
       
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag"># iOS</a>
+          
+            <a href="/tags/PSOF/" rel="tag"># PSOF</a>
+          
+        </div>
+      
 
       
       
@@ -552,18 +532,14 @@ browser.displayArrowButton = YES;
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/Block/" rel="next" title="Block深度软文">
-                <i class="fa fa-chevron-left"></i> Block深度软文
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/Shadowsocks/" rel="prev" title="Shadowsocks update">
-                Shadowsocks update <i class="fa fa-chevron-right"></i>
+              <a href="/iOSIJKPlayer/" rel="prev" title="iOS IJKPlayer RTMP播放器的集成">
+                iOS IJKPlayer RTMP播放器的集成 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -770,7 +746,7 @@ browser.displayArrowButton = YES;
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正文"><span class="nav-number">2.</span> <span class="nav-text">正文</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Login-amp-Registration"><span class="nav-number">1.</span> <span class="nav-text">Login&amp;Registration</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Home"><span class="nav-number">2.</span> <span class="nav-text">Home</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Search"><span class="nav-number">3.</span> <span class="nav-text">Search</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Post"><span class="nav-number">4.</span> <span class="nav-text">Post</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Chat"><span class="nav-number">5.</span> <span class="nav-text">Chat</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#My"><span class="nav-number">6.</span> <span class="nav-text">My</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Screen"><span class="nav-number">7.</span> <span class="nav-text">Screen</span></a></li></ol></div>
             
 
           </div>
