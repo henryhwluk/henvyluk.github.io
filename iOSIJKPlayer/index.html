@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="iOS IJKPlayer RTMP播放器的集成前言前些日子公司要做视频直播，一直也是项目的原因没来得及整理内容。周末闲暇时间特来写篇文章，对IJKPlayer播放器的集成做一下归纳，希望对要做iOS视频直播方向的开发者有所帮助。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS IJKPlayer RTMP播放器的集成">
+<meta property="og:url" content="http://henvyluk.me/iOSIJKPlayer/index.html">
+<meta property="og:site_name" content="Henvy&#39;s Notes">
+<meta property="og:description" content="iOS IJKPlayer RTMP播放器的集成前言前些日子公司要做视频直播，一直也是项目的原因没来得及整理内容。周末闲暇时间特来写篇文章，对IJKPlayer播放器的集成做一下归纳，希望对要做iOS视频直播方向的开发者有所帮助。">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/bd65c956gw1fa6x3vv5utj20fr0a276y.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/bd65c956gw1fa80uhh7udj20fq0a2q79.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/bd65c956gw1fa81grkbobj20la0bzdj3.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/bd65c956gw1fa81xdraz9j20f8091t9i.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/bd65c956gw1fa82aawbmvj20l80by77d.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/bd65c956gw1fa82kh3xkqj20cd05hgme.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/bd65c956gw1fa82mft3vej20ot0dw75x.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/bd65c956gw1fa82nzpo4lj209m010glj.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/bd65c956gw1fa82oevlx3j209a0103ye.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/bd65c956gw1fa82pkzyy4j20az07vdh1.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/bd65c956gw1fa84ty8rbgj20ky0b140n.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/bd65c956gw1fa835tggdlj208j0fsgmm.jpg">
+<meta property="og:updated_time" content="2016-12-04T16:00:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS IJKPlayer RTMP播放器的集成">
+<meta name="twitter:description" content="iOS IJKPlayer RTMP播放器的集成前言前些日子公司要做视频直播，一直也是项目的原因没来得及整理内容。周末闲暇时间特来写篇文章，对IJKPlayer播放器的集成做一下归纳，希望对要做iOS视频直播方向的开发者有所帮助。">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/bd65c956gw1fa6x3vv5utj20fr0a276y.jpg">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://henvyluk.me/iOSIJKPlayer/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>iOS IJKPlayer RTMP播放器的集成 | Henvy's Notes</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Henvy's Notes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">人的一切痛苦，本质上都是对自己无能的愤怒。</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags<span class="badge">13</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories<span class="badge">0</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives<span class="badge">16</span></a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://henvyluk.me/iOSIJKPlayer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="henvy">
+      <meta itemprop="description" content="iOS Developer">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Henvy's Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">iOS IJKPlayer RTMP播放器的集成
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2016-12-05 21:33:06 / Modified: 00:00:00" itemprop="dateCreated datePublished" datetime="2016-12-05T21:33:06+08:00">2016-12-05</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/iOSIJKPlayer/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/iOSIJKPlayer/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/iOSIJKPlayer/" class="leancloud_visitors" data-flag-title="iOS IJKPlayer RTMP播放器的集成">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Views: </span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Symbols count in article: </span>
+                
+                <span title="Symbols count in article">3k</span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="iOS-IJKPlayer-RTMP播放器的集成"><a href="#iOS-IJKPlayer-RTMP播放器的集成" class="headerlink" title="iOS IJKPlayer RTMP播放器的集成"></a>iOS IJKPlayer RTMP播放器的集成</h1><h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>前些日子公司要做视频直播，一直也是项目的原因没来得及整理内容。周末闲暇时间特来写篇文章，对IJKPlayer播放器的集成做一下归纳，希望对要做iOS视频直播方向的开发者有所帮助。</p>
+<a id="more"></a>
+
+<h3 id="1、环境搭建"><a href="#1、环境搭建" class="headerlink" title="1、环境搭建"></a>1、环境搭建</h3><p>总结来说就是<a href="http://brew.sh/index_zh-cn.html" target="_blank" rel="noopener">HomeBrew</a> or <a href="https://www.macports.org/install.php" target="_blank" rel="noopener">MacPorts</a>、git、yasm的安装(Homebrew是Mac OSX上的软件包管理工具，当时macOS Sierra刚刚出来我就手贱更新了，导致HomeBrew安装出现了问题，所以采用了MacPorts，官方推荐HomeBrew)。</p>
+<p>这里我只做一下版本检查：<br><img src="http://ww1.sinaimg.cn/large/bd65c956gw1fa6x3vv5utj20fr0a276y.jpg" alt="version Screenshot"><br>首先HomeBrew：</p>
+<pre><code>ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</code></pre><p>待HomeBrew安装完毕即git、yasm：</p>
+<pre><code>brew install git
+brew install yasm</code></pre><h3 id="2-下载ijkplayer编译"><a href="#2-下载ijkplayer编译" class="headerlink" title="2.下载ijkplayer编译"></a>2.下载ijkplayer编译</h3><p>1、 首先新建要下载的文件夹ijkplayer并cd到该目录下。</p>
+<p>2、 紧接着将ijkplayer文件克隆到新建的文件夹内，在终端输入：</p>
+<pre><code>//git克隆
+git clone https://github.com/Bilibili/ijkplayer.git ijkplayer-ios
+
+//进入ijkplayer-ios
+cd ijkplayer-ios
+
+//切换分支
+git checkout -B latest k0.7.5</code></pre><p>如图所示：<br><img src="http://ww3.sinaimg.cn/large/bd65c956gw1fa80uhh7udj20fq0a2q79.jpg" alt="download Screenshot"><br>3、下载ffmpeg并编译</p>
+<p>这一步比较纠结国外网络访问的问题，如果失败就多试几次。</p>
+<pre><code>//依然在ijkplayer-ios下载ffmpeg
+./init-ios.sh
+
+//进入ios目录
+cd ios</code></pre><p> 这一步如果前面没有问题，此时的terminal就像打了鸡血一样狂奔……<br> (注意中途会有n多个警告，但不要出错就没问题)</p>
+<pre><code>//clean
+./compile-ffmpeg.sh clean
+
+//编译
+./compile-ffmpeg.sh all</code></pre><p> 成功走到这一步就离成功不远了，按步骤走是不会出现问题的，即便有大部分也是网络的原因毕竟大天朝对国外的网络都懂的。</p>
+<h3 id="3、demo的处理"><a href="#3、demo的处理" class="headerlink" title="3、demo的处理"></a>3、demo的处理</h3><p>1、打开官方demo并运行<br><img src="http://ww3.sinaimg.cn/large/bd65c956gw1fa81grkbobj20la0bzdj3.jpg" alt="file Screenshot"></p>
+<p>2、只要前面的流程没报错，这里编译运行都不会出现问题：<br>可以在Online Samples中选择一个m3u8测试ijkplayer是否运行正常如图：<br><img src="http://ww4.sinaimg.cn/large/bd65c956gw1fa81xdraz9j20f8091t9i.jpg" alt="Samples Screenshot"></p>
+<h3 id="4、制作framework"><a href="#4、制作framework" class="headerlink" title="4、制作framework"></a>4、制作framework</h3><p>1、打开ijkplayer如图：<br><img src="http://ww3.sinaimg.cn/large/bd65c956gw1fa82aawbmvj20l80by77d.jpg" alt="file Screenshot"><br>2、选择edit scheme，下图：<br><img src="http://ww1.sinaimg.cn/large/bd65c956gw1fa82kh3xkqj20cd05hgme.jpg" alt="edit Screenshot"></p>
+<p>3、将build configuration改为Release后点Close，如图：<br><img src="http://ww2.sinaimg.cn/large/bd65c956gw1fa82mft3vej20ot0dw75x.jpg" alt="Release Screenshot"></p>
+<p>4、分别在模拟器和真机(Generic iOS Device也可以)上编译：<br><img src="http://ww4.sinaimg.cn/large/bd65c956gw1fa82nzpo4lj209m010glj.jpg" alt><br><img src="http://ww2.sinaimg.cn/large/bd65c956gw1fa82oevlx3j209a0103ye.jpg" alt></p>
+<p>5、打开framework所在的目录:<br><img src="http://ww4.sinaimg.cn/large/bd65c956gw1fa82pkzyy4j20az07vdh1.jpg" alt></p>
+<p>6、看名字就知道一个是模拟器一个是真机，此时cd到Products目录：</p>
+<pre><code>//合并
+lipo -create Release-iphoneos/IJKMediaFramework.framework/IJKMediaFramework Release-iphonesimulator/IJKMediaFramework.framework/IJKMediaFramework -output IJKMediaFramework
+//将合并后的framework拷贝到iphoneos/IJKMediaFramework.framework中
+cp IJKMediaFramework Release-iphoneos/IJKMediaFramework.framework/</code></pre><p>7、此时framework就制作好了，将制作好的iphoneos/IJKMediaFramework.framework复制到要集成的项目中Add Files…</p>
+<p>8、在所在的项目中添加动态库<br><img src="http://ww4.sinaimg.cn/large/bd65c956gw1fa84ty8rbgj20ky0b140n.jpg" alt="lib Screenshot"></p>
+<p>9、测试集成，将本段代码复制到ViewController.m中，可直接使用：</p>
+<pre><code>#import &quot;ViewController.h&quot;
+#import &lt;IJKMediaFramework/IJKFFMoviePlayerController.h&gt;
+@interface ViewController ()
+@property(nonatomic,strong)IJKFFMoviePlayerController * player;
+@end
+
+@implementation ViewController
+
+- (void)viewDidLoad {
+[super viewDidLoad];
+
+IJKFFOptions *options = [IJKFFOptions optionsByDefault]; //使用默认配置
+NSURL * url = [NSURL URLWithString:@&quot;rtmp://live.hkstv.hk.lxdns.com/live/hks&quot;]; 
+self.player = [[IJKFFMoviePlayerController alloc] initWithContentURL:url withOptions:options]; //初始化播放器，播放在线视频或直播(RTMP)
+self.player.view.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+self.player.view.frame = self.view.bounds;
+self.player.scalingMode = IJKMPMovieScalingModeAspectFit; //缩放模式
+self.player.shouldAutoplay = YES; //开启自动播放
+
+self.view.autoresizesSubviews = YES;
+[self.view addSubview:self.player.view];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+[super viewWillAppear:animated];
+[self.player prepareToPlay];
+}
+
+-(void)viewDidDisappear:(BOOL)animated {
+[super viewDidDisappear:animated];
+[self.player shutdown];
+}
+- (void)didReceiveMemoryWarning {
+[super didReceiveMemoryWarning];
+// Dispose of any resources that can be recreated.
+}
+
+@end</code></pre><p>OK完美收工：</p>
+<p><img src="http://ww3.sinaimg.cn/large/bd65c956gw1fa835tggdlj208j0fsgmm.jpg" alt></p>
+<h3 id="3、github"><a href="#3、github" class="headerlink" title="3、github"></a>3、github</h3><p>地址在这<a href="https://github.com/henvyluk/IJKMediaPlayer" target="_blank" rel="noopener">https://github.com/henvyluk/IJKMediaPlayer</a>,另附demo一份，望大神不吝赐教再会！</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/cocoapods/" rel="prev" title="为你的库添加cocoapods支持">
+                为你的库添加cocoapods支持 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="henvy">
+            
+              <p class="site-author-name" itemprop="name">henvy</p>
+              <div class="site-description motion-element" itemprop="description">iOS Developer</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">16</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/henvyluk" title="GitHub &rarr; https://github.com/henvyluk" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:henvyluk@gmail.com" title="E-Mail &rarr; mailto:henvyluk@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://stackoverflow.com/henvyluk" title="StackOverflow &rarr; https://stackoverflow.com/henvyluk" rel="noopener" target="_blank"><i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://instagram.com/henvyluk6137" title="Instagram &rarr; https://instagram.com/henvyluk6137" rel="noopener" target="_blank"><i class="fa fa-fw fa-instagram"></i>Instagram</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#iOS-IJKPlayer-RTMP播放器的集成"><span class="nav-number">1.</span> <span class="nav-text">iOS IJKPlayer RTMP播放器的集成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前言"><span class="nav-number">1.0.1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1、环境搭建"><span class="nav-number">1.0.2.</span> <span class="nav-text">1、环境搭建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-下载ijkplayer编译"><span class="nav-number">1.0.3.</span> <span class="nav-text">2.下载ijkplayer编译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、demo的处理"><span class="nav-number">1.0.4.</span> <span class="nav-text">3、demo的处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、制作framework"><span class="nav-number">1.0.5.</span> <span class="nav-text">4、制作framework</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、github"><span class="nav-number">1.0.6.</span> <span class="nav-text">3、github</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">henvy</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.1.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.1.2"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+
+  
+
+  
+
+  
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'XsnVGUN1q3EdjjX8gDUaC9dI-gzGzoHsz',
+    appKey: 'hmJIhkV9wwWT5Ip2Ngkaro8L',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: '' || 'zh-cn'
+  });
+</script>
+
+
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":300,"height":600},"mobile":{"show":true}});</script></body>
+</html>

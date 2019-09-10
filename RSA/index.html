@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Publickey、Privatekey、Certificate12345678910111213openssl genrsa -out private_key.pem 1024 //original keyopenssl req -new -key private_key.pem -out rsaCertReq.csr openssl x509 -req -days 3650 -in rsaCe">
+<meta name="keywords" content="iOS,RSA,base64,MD5,非对称加密">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS非对称RSA加密">
+<meta property="og:url" content="http://henvyluk.me/RSA/index.html">
+<meta property="og:site_name" content="Henvy&#39;s Notes">
+<meta property="og:description" content="Publickey、Privatekey、Certificate12345678910111213openssl genrsa -out private_key.pem 1024 //original keyopenssl req -new -key private_key.pem -out rsaCertReq.csr openssl x509 -req -days 3650 -in rsaCe">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-06-19T16:00:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS非对称RSA加密">
+<meta name="twitter:description" content="Publickey、Privatekey、Certificate12345678910111213openssl genrsa -out private_key.pem 1024 //original keyopenssl req -new -key private_key.pem -out rsaCertReq.csr openssl x509 -req -days 3650 -in rsaCe">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="http://henvyluk.me/RSA/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>iOS非对称RSA加密 | Henvy's Notes</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="en">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Henvy's Notes</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">人的一切痛苦，本质上都是对自己无能的愤怒。</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags<span class="badge">13</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories<span class="badge">0</span></a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives<span class="badge">16</span></a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://henvyluk.me/RSA/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="henvy">
+      <meta itemprop="description" content="iOS Developer">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Henvy's Notes">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">iOS非对称RSA加密
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-06-20 00:00:00" itemprop="dateCreated datePublished" datetime="2019-06-20T00:00:00+08:00">2019-06-20</time>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/RSA/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/RSA/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/RSA/" class="leancloud_visitors" data-flag-title="iOS非对称RSA加密">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Views: </span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Symbols count in article: </span>
+                
+                <span title="Symbols count in article">15k</span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="Publickey、Privatekey、Certificate"><a href="#Publickey、Privatekey、Certificate" class="headerlink" title="Publickey、Privatekey、Certificate"></a>Publickey、Privatekey、Certificate</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">openssl genrsa -out private_key.pem 1024 //original key</span><br><span class="line"></span><br><span class="line">openssl req -new -key private_key.pem -out rsaCertReq.csr </span><br><span class="line"></span><br><span class="line">openssl x509 -req -days 3650 -in rsaCertReq.csr -signkey private_key.pem -out rsaCert.crt</span><br><span class="line"></span><br><span class="line">openssl x509 -outform der -in rsaCert.crt -out public_key.der // Create public_key.der For iOS</span><br><span class="line"></span><br><span class="line">openssl pkcs12 -export -out private_key.p12 -inkey private_key.pem -in rsaCert.crt //Create private_key.p12 For iOS</span><br><span class="line"></span><br><span class="line">openssl rsa -in private_key.pem -out rsa_public_key.pem -pubout // Create rsa_public_key.pem For Java</span><br><span class="line"></span><br><span class="line">openssl pkcs8 -topk8 -in private_key.pem -out pkcs8_private_key.pem -nocrypt //Create pkcs8_private_key.pem For Java</span><br></pre></td></tr></table></figure>
+
+<a id="more"></a>
+
+<p>上面七个步骤，总共生成7个文件。其中　public_key.der 和 private_key.p12 这对公钥私钥是给iOS用的，rsa_public_key.pem 和 pkcs8_private_key.pem是给JAVA用的。<br>它们的源都来自一个私钥：private_key.pem ， 所以iOS端加密的数据，是可以被JAVA端解密的，反过来也一样。</p>
+<h3 id="iOS-RSA"><a href="#iOS-RSA" class="headerlink" title="iOS RSA"></a>iOS RSA</h3><ul>
+<li>head File</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import UIKit</span><br><span class="line">import CoreFoundation</span><br><span class="line">import CommonCrypto</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Attributes</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// padding types</span><br><span class="line">let kTypeOfWrapPadding = SecPadding.PKCS1</span><br><span class="line"></span><br><span class="line">// 公钥引用</span><br><span class="line">static var publicKeyRef: SecKey?</span><br><span class="line">    </span><br><span class="line">// 私钥引用</span><br><span class="line">static var privateKeyRef: SecKey?</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>LoadPublicKey</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">class func loadPublicKey(_ filePath: String) -&gt; SecKey? &#123;</span><br><span class="line">        if publicKeyRef != nil &#123;</span><br><span class="line">            publicKeyRef = nil</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        var certificateRef: SecCertificate?</span><br><span class="line">        </span><br><span class="line">        do &#123;</span><br><span class="line">            // 用一个.der格式证书创建一个证书对象</span><br><span class="line">            let certificateData = try Data(contentsOf: URL(fileURLWithPath: filePath))</span><br><span class="line">            certificateRef = SecCertificateCreateWithData(kCFAllocatorDefault, certificateData as CFData)</span><br><span class="line">        &#125; catch &#123;</span><br><span class="line">            print(&quot;file of public key is error.&quot;)</span><br><span class="line">            return nil</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        // 返回一个默认 X509 策略的公钥对象</span><br><span class="line">        let policyRef = SecPolicyCreateBasicX509()</span><br><span class="line">        // 包含信任管理信息的结构体</span><br><span class="line">        var trustRef: SecTrust?</span><br><span class="line">        </span><br><span class="line">        // 基于证书和策略创建一个信任管理对象</span><br><span class="line">        var status = SecTrustCreateWithCertificates(certificateRef!, policyRef, &amp;trustRef)</span><br><span class="line">        if status != errSecSuccess &#123;</span><br><span class="line">            print(&quot;trust create With Certificates unsuccessfully&quot;)</span><br><span class="line">            return nil</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        // 信任结果</span><br><span class="line">        var trustResult = SecTrustResultType.invalid</span><br><span class="line">        // 评估指定证书和策略的信任管理是否有效</span><br><span class="line">        status = SecTrustEvaluate(trustRef!, &amp;trustResult)</span><br><span class="line">        </span><br><span class="line">        if status != errSecSuccess &#123;</span><br><span class="line">            print(&quot;trust evaluate unsuccessfully&quot;)</span><br><span class="line">            return nil</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        // 评估之后返回公钥子证书</span><br><span class="line">        publicKeyRef = SecTrustCopyPublicKey(trustRef!)</span><br><span class="line">        if publicKeyRef == nil &#123;</span><br><span class="line">            print(&quot;public Key create unsuccessfully&quot;)</span><br><span class="line">            return nil</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        return publicKeyRef</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>LoadPrivateKey</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">class func loadPrivateKey(_ filePath: String, _ password: String) -&gt; SecKey? &#123;</span><br><span class="line">      if filePath.count &lt;= 0  &#123;</span><br><span class="line">          print(&quot;path of public key is nil.&quot;)</span><br><span class="line">          return nil</span><br><span class="line">      &#125;</span><br><span class="line">      </span><br><span class="line">      if privateKeyRef != nil &#123;</span><br><span class="line">          privateKeyRef = nil</span><br><span class="line">      &#125;</span><br><span class="line">      </span><br><span class="line">      var pkcs12Data: Data?</span><br><span class="line">      do &#123;</span><br><span class="line">          pkcs12Data = try Data(contentsOf: URL(fileURLWithPath: filePath))</span><br><span class="line">      &#125; catch &#123;</span><br><span class="line">          print(error)</span><br><span class="line">          return nil</span><br><span class="line">      &#125;</span><br><span class="line">      </span><br><span class="line">      let kSecImportExportPassphraseString = kSecImportExportPassphrase as String</span><br><span class="line">      let options = [kSecImportExportPassphraseString: password]</span><br><span class="line">      var items : CFArray?</span><br><span class="line">      let status = SecPKCS12Import(pkcs12Data! as CFData, options as CFDictionary, &amp;items)</span><br><span class="line">      if status != errSecSuccess &#123;</span><br><span class="line">          print(&quot;Imports the contents of a PKCS12 formatted blob unsuccessfully&quot;)</span><br><span class="line">          return nil</span><br><span class="line">      &#125;</span><br><span class="line">      </span><br><span class="line">      if CFArrayGetCount(items) &lt;= 0 &#123;</span><br><span class="line">          print(&quot;the number of values currently in the array &lt;= 0&quot;)</span><br><span class="line">          return nil</span><br><span class="line">      &#125;</span><br><span class="line">      </span><br><span class="line">      let kSecImportItemIdentityString = kSecImportItemIdentity</span><br><span class="line">      </span><br><span class="line">      let dict = unsafeBitCast(CFArrayGetValueAtIndex(items, 0),to: CFDictionary.self)</span><br><span class="line">      let key = Unmanaged.passUnretained(kSecImportItemIdentityString).toOpaque()</span><br><span class="line">      let value = CFDictionaryGetValue(dict, key)</span><br><span class="line">      let secIdentity = unsafeBitCast(value, to: SecIdentity.self)</span><br><span class="line">      </span><br><span class="line">      let secIdentityCopyPrivateKey = SecIdentityCopyPrivateKey(secIdentity, &amp;privateKeyRef)</span><br><span class="line">      if secIdentityCopyPrivateKey != errSecSuccess &#123;</span><br><span class="line">          print(&quot;return the private key associated with an identity unsuccessfully&quot;)</span><br><span class="line">          return nil</span><br><span class="line">      &#125;</span><br><span class="line">      return privateKeyRef</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>RSAEncrypt</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public class func rsaEncrypt(_ publicKeyPath: String?, _ string: String, _ completion: ((_ encryptedString: String?) -&gt; ())?) &#123;</span><br><span class="line">        guard let encryptData = string.data(using: String.Encoding.utf8) else &#123;</span><br><span class="line">            print(&quot;String to be encrypted is nil&quot;)</span><br><span class="line">            completion?(nil)</span><br><span class="line">            return</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        rsaEncrypt(publicKeyPath, encryptData) &#123; (data) in</span><br><span class="line">            guard let encryptedData = data else &#123;</span><br><span class="line">                completion?(nil)</span><br><span class="line">                return</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            completion?(encryptedData.base64String)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">public class func rsaEncrypt(_ publicKeyPath: String?, _ data: Data?, _ completion: ((_ encryptedData: Data?) -&gt; ())?) &#123;</span><br><span class="line">        guard let pkPath = publicKeyPath,</span><br><span class="line">            let pkRef = loadPublicKey(pkPath),</span><br><span class="line">            let dt = data else &#123;</span><br><span class="line">                print(&quot;path of public key is nil.&quot;)</span><br><span class="line">                completion?(nil)</span><br><span class="line">                return</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        guard dt.count &gt; 0 &amp;&amp; dt.count &lt; SecKeyGetBlockSize(pkRef) - 11</span><br><span class="line">            else &#123;</span><br><span class="line">                print(&quot;The content encrypted is too large&quot;)</span><br><span class="line">                completion?(nil)</span><br><span class="line">                return</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        let cipherBufferSize = SecKeyGetBlockSize(pkRef)</span><br><span class="line">        var encryptBytes = [UInt8](repeating: 0, count: cipherBufferSize)</span><br><span class="line">        var outputSize: Int = cipherBufferSize</span><br><span class="line">        let secKeyEncrypt = SecKeyEncrypt(pkRef, SecPadding.PKCS1, dt.arrayOfBytes(), dt.count, &amp;encryptBytes, &amp;outputSize)</span><br><span class="line">        if errSecSuccess != secKeyEncrypt &#123;</span><br><span class="line">            print(&quot;decrypt unsuccessfully&quot;)</span><br><span class="line">            completion?(nil)</span><br><span class="line">            return</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        completion?(Data(bytes: UnsafePointer&lt;UInt8&gt;(encryptBytes), count: outputSize))</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>RSADecrypt</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public class func rsaDecrypt(_ privateKeyPath: String?, _ password: String, _ string: String?, _ completion: ((_ encryptedString: String?) -&gt; ())?) &#123;</span><br><span class="line">        guard let str = string,</span><br><span class="line">            let decryptData = Data(base64Encoded: str) else &#123;</span><br><span class="line">                print(&quot;String to be decrypted is nil&quot;)</span><br><span class="line">                completion?(nil)</span><br><span class="line">                return</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        rsaDecrypt(privateKeyPath, password, decryptData) &#123; (data) in</span><br><span class="line">            guard let decryptedData = data else &#123;</span><br><span class="line">                completion?(nil)</span><br><span class="line">                return</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            completion?(String(data: decryptedData, encoding: String.Encoding.utf8))</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">public class func rsaDecrypt(_ privateKeyPath: String?, _ password: String, _ data: Data?, _ completion: ((_ encryptedData: Data?) -&gt; ())?) &#123;</span><br><span class="line">       guard let pkPath = privateKeyPath,</span><br><span class="line">           let pkRef = loadPrivateKey(pkPath, password),</span><br><span class="line">           let dt = data else &#123;</span><br><span class="line">               print(&quot;path of private key is nil.&quot;)</span><br><span class="line">               completion?(nil)</span><br><span class="line">               return</span><br><span class="line">       &#125;</span><br><span class="line">       </span><br><span class="line">       let cipherBufferSize = SecKeyGetBlockSize(pkRef)</span><br><span class="line">       let keyBufferSize = dt.count</span><br><span class="line">       if keyBufferSize &gt; cipherBufferSize &#123;</span><br><span class="line">           print(&quot;The content decrypted is too large&quot;)</span><br><span class="line">           completion?(nil)</span><br><span class="line">           return</span><br><span class="line">       &#125;</span><br><span class="line">       </span><br><span class="line">       var decryptBytes = [UInt8](repeating: 0, count: cipherBufferSize)</span><br><span class="line">       var outputSize = cipherBufferSize</span><br><span class="line">       let status = SecKeyDecrypt(pkRef, SecPadding.PKCS1, dt.arrayOfBytes(), dt.count, &amp;decryptBytes, &amp;outputSize)</span><br><span class="line">       if errSecSuccess != status &#123;</span><br><span class="line">           print(&quot;decrypt unsuccessfully&quot;)</span><br><span class="line">           completion?(nil)</span><br><span class="line">           return</span><br><span class="line">       &#125;</span><br><span class="line">       </span><br><span class="line">       completion?(Data(bytes: UnsafePointer&lt;UInt8&gt;(decryptBytes), count: outputSize))</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Base64"><a href="#Base64" class="headerlink" title="Base64"></a>Base64</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">extension Data &#123;</span><br><span class="line">    </span><br><span class="line">    /// Data to base64 String</span><br><span class="line">    public var base64String: String &#123;</span><br><span class="line">        return base64EncodedString(options: NSData.Base64EncodingOptions())</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    /// Array of UInt8</span><br><span class="line">    public func arrayOfBytes() -&gt; [UInt8] &#123;</span><br><span class="line">        let count = self.count / MemoryLayout&lt;UInt8&gt;.size</span><br><span class="line">        var bytesArray = [UInt8](repeating: 0, count: count)</span><br><span class="line">        (self as NSData).getBytes(&amp;bytesArray, length:count * MemoryLayout&lt;UInt8&gt;.size)</span><br><span class="line">        return bytesArray</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="MD5"><a href="#MD5" class="headerlink" title="MD5"></a>MD5</h3><ul>
+<li>String</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">public func md5() -&gt; String &#123;</span><br><span class="line">       let str = self.cString(using: String.Encoding.utf8)</span><br><span class="line">       let strLen = CUnsignedInt(self.lengthOfBytes(using: String.Encoding.utf8))</span><br><span class="line">       let digestLen = Int(CC_MD5_DIGEST_LENGTH)</span><br><span class="line">       let result = UnsafeMutablePointer&lt;UInt8&gt;.allocate(capacity: 16)</span><br><span class="line">       CC_MD5(str!, strLen, result)</span><br><span class="line">       let hash = NSMutableString()</span><br><span class="line">       for i in 0 ..&lt; digestLen &#123;</span><br><span class="line">           hash.appendFormat(&quot;%02x&quot;, result[i])</span><br><span class="line">       &#125;</span><br><span class="line">       free(result)</span><br><span class="line">       return String(format: hash as String)</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>File</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">public func md5_File() -&gt; String? &#123;</span><br><span class="line">        guard let fileHandle = FileHandle(forReadingAtPath: self) else &#123;</span><br><span class="line">            return nil</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        let ctx = UnsafeMutablePointer&lt;CC_MD5_CTX&gt;.allocate(capacity: MemoryLayout&lt;CC_MD5_CTX&gt;.size)</span><br><span class="line">        </span><br><span class="line">        CC_MD5_Init(ctx)</span><br><span class="line">        </span><br><span class="line">        var done = false</span><br><span class="line">        </span><br><span class="line">        while !done &#123;</span><br><span class="line">            let fileData = fileHandle.readData(ofLength: 256)</span><br><span class="line">            fileData.withUnsafeBytes &#123;(bytes: UnsafePointer&lt;CChar&gt;) -&gt; () in</span><br><span class="line">                /// Use `bytes` inside this closure</span><br><span class="line">                CC_MD5_Update(ctx, bytes, CC_LONG(fileData.count))</span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            if fileData.count == 0 &#123;</span><br><span class="line">                done = true</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        let digest = Int(CC_MD5_DIGEST_LENGTH)</span><br><span class="line">        let result = UnsafeMutablePointer&lt;CUnsignedChar&gt;.allocate(capacity: digest)</span><br><span class="line">        CC_MD5_Final(result, ctx);</span><br><span class="line">        </span><br><span class="line">        var hash = &quot;&quot;</span><br><span class="line">        for i in 0..&lt;digest &#123;</span><br><span class="line">            hash +=  String(format: &quot;%02x&quot;, (result[i]))</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        free(result)</span><br><span class="line">        free(ctx)</span><br><span class="line">        </span><br><span class="line">        return hash;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="RSA分段加密"><a href="#RSA分段加密" class="headerlink" title="RSA分段加密"></a>RSA分段加密</h3><ul>
+<li>RSAEncrypt</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public class func rsaEncrypt(_ publicKeyPath: String?, _ string: String, _ completion: ((_ encryptedString: String?) -&gt; ())?) &#123;</span><br><span class="line">       guard let encryptData = string.data(using: String.Encoding.utf8) else &#123;</span><br><span class="line">           print(&quot;String to be encrypted is nil&quot;)</span><br><span class="line">           completion?(nil)</span><br><span class="line">           return</span><br><span class="line">       &#125;</span><br><span class="line">       </span><br><span class="line">       rsaEncrypt(publicKeyPath, encryptData) &#123; (data) in</span><br><span class="line">           guard let encryptedData = data else &#123;</span><br><span class="line">               completion?(nil)</span><br><span class="line">               return</span><br><span class="line">           &#125;</span><br><span class="line">           </span><br><span class="line">           completion?(encryptedData.base64String)</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">public class func rsaEncrypt(_ publicKeyPath: String?, _ data: Data?, _ completion: ((_ encryptedData: Data?) -&gt; ())?) &#123;</span><br><span class="line">       guard let pkPath = publicKeyPath,</span><br><span class="line">           let pkRef = loadPublicKey(pkPath),</span><br><span class="line">           let dt = data else &#123;</span><br><span class="line">               print(&quot;path of public key is nil.&quot;)</span><br><span class="line">               completion?(nil)</span><br><span class="line">               return</span><br><span class="line">       &#125;</span><br><span class="line">       let blockLen =  SecKeyGetBlockSize(pkRef)</span><br><span class="line">       var outBuf = [UInt8](repeating: 0, count: blockLen)</span><br><span class="line">       var outBufLen:Int = blockLen</span><br><span class="line">       var index = 0</span><br><span class="line">       let totalLen = dt.count</span><br><span class="line">       let resData = NSMutableData()</span><br><span class="line">       </span><br><span class="line">       while index &lt; totalLen &#123;</span><br><span class="line">           var curDataLen = totalLen - index</span><br><span class="line">           if curDataLen &gt; blockLen - 11 &#123;</span><br><span class="line">               curDataLen = blockLen - 11</span><br><span class="line">           &#125;</span><br><span class="line">           let curData: NSData = dt.subdata(in: Range(NSRange(location: index, length: curDataLen))!) as NSData</span><br><span class="line">           let status: OSStatus = SecKeyEncrypt(pkRef, SecPadding.PKCS1, curData.bytes.assumingMemoryBound(to: UInt8.self), curData.length, &amp;outBuf, &amp;outBufLen)</span><br><span class="line">           </span><br><span class="line">           if status == noErr &#123;</span><br><span class="line">               resData.append(outBuf, length: outBufLen)</span><br><span class="line">           &#125;else&#123;</span><br><span class="line">               print(&quot;encrypt status = \(status)&quot;)</span><br><span class="line">           &#125;</span><br><span class="line">           </span><br><span class="line">           index += curDataLen</span><br><span class="line">       &#125;</span><br><span class="line">       completion?(resData as Data)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>RSADecrypt</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public class func rsaDecrypt(_ privateKeyPath: String?, _ password: String, _ string: String?, _ completion: ((_ encryptedString: String?) -&gt; ())?) &#123;</span><br><span class="line">      guard let str = string,</span><br><span class="line">          let decryptData = Data(base64Encoded: str) else &#123;</span><br><span class="line">              print(&quot;String to be decrypted is nil&quot;)</span><br><span class="line">              completion?(nil)</span><br><span class="line">              return</span><br><span class="line">      &#125;</span><br><span class="line">      </span><br><span class="line">      rsaDecrypt(privateKeyPath, password, decryptData) &#123; (data) in</span><br><span class="line">          guard let decryptedData = data else &#123;</span><br><span class="line">              completion?(nil)</span><br><span class="line">              return</span><br><span class="line">          &#125;</span><br><span class="line">          </span><br><span class="line">          completion?(String(data: decryptedData, encoding: String.Encoding.utf8))</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">public class func rsaDecrypt(_ privateKeyPath: String?, _ password: String, _ data: Data?, _ completion: ((_ encryptedData: Data?) -&gt; ())?) &#123;</span><br><span class="line">       guard let pkPath = privateKeyPath,</span><br><span class="line">           let pkRef = loadPrivateKey(pkPath, password),</span><br><span class="line">           let dt = data else &#123;</span><br><span class="line">               print(&quot;path of private key is nil.&quot;)</span><br><span class="line">               completion?(nil)</span><br><span class="line">               return</span><br><span class="line">       &#125;</span><br><span class="line">       let blockLen = SecKeyGetBlockSize(pkRef)</span><br><span class="line">       let outBuf = UnsafeMutablePointer&lt;UInt8&gt;.allocate(capacity: blockLen)</span><br><span class="line">       defer &#123;</span><br><span class="line">           outBuf.deallocate()</span><br><span class="line">       &#125;</span><br><span class="line">       var outBufLen: Int = blockLen</span><br><span class="line">       var index = 0</span><br><span class="line">       let totalLen = dt.count</span><br><span class="line">       let resData = NSMutableData()</span><br><span class="line">       </span><br><span class="line">       while index &lt; totalLen &#123;</span><br><span class="line">           var curDataLen = totalLen - index</span><br><span class="line">           if curDataLen  &gt; blockLen &#123;</span><br><span class="line">               curDataLen = blockLen</span><br><span class="line">           &#125;</span><br><span class="line">           let curData: Data = dt.subdata(in: index ..&lt; index + curDataLen)</span><br><span class="line">           var status:OSStatus = noErr</span><br><span class="line">           curData.withUnsafeBytes &#123; (bytes:UnsafePointer&lt;UInt8&gt;) in</span><br><span class="line">               //print(bytes)</span><br><span class="line">               status = SecKeyDecrypt(pkRef, SecPadding.PKCS1, bytes, curData.count, outBuf, &amp;outBufLen)</span><br><span class="line">           &#125;</span><br><span class="line">           </span><br><span class="line">           if status == noErr &#123;</span><br><span class="line">               resData.append(outBuf, length: outBufLen)</span><br><span class="line">           &#125;else&#123;</span><br><span class="line">               print(&quot;decrypt status = \(status)&quot;)</span><br><span class="line">           &#125;</span><br><span class="line">           index += curDataLen</span><br><span class="line">       &#125;</span><br><span class="line">       completion?(resData as Data)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag"># iOS</a>
+          
+            <a href="/tags/RSA/" rel="tag"># RSA</a>
+          
+            <a href="/tags/base64/" rel="tag"># base64</a>
+          
+            <a href="/tags/MD5/" rel="tag"># MD5</a>
+          
+            <a href="/tags/非对称加密/" rel="tag"># 非对称加密</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/CustomTabBar/" rel="next" title="CustomTabBar">
+                <i class="fa fa-chevron-left"></i> CustomTabBar
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/RSA/" rel="prev" title="iOS非对称RSA加密">
+                iOS非对称RSA加密 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.gif" alt="henvy">
+            
+              <p class="site-author-name" itemprop="name">henvy</p>
+              <div class="site-description motion-element" itemprop="description">iOS Developer</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">16</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/henvyluk" title="GitHub &rarr; https://github.com/henvyluk" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:henvyluk@gmail.com" title="E-Mail &rarr; mailto:henvyluk@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://stackoverflow.com/henvyluk" title="StackOverflow &rarr; https://stackoverflow.com/henvyluk" rel="noopener" target="_blank"><i class="fa fa-fw fa-stack-overflow"></i>StackOverflow</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://instagram.com/henvyluk6137" title="Instagram &rarr; https://instagram.com/henvyluk6137" rel="noopener" target="_blank"><i class="fa fa-fw fa-instagram"></i>Instagram</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Publickey、Privatekey、Certificate"><span class="nav-number">1.</span> <span class="nav-text">Publickey、Privatekey、Certificate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#iOS-RSA"><span class="nav-number">2.</span> <span class="nav-text">iOS RSA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Base64"><span class="nav-number">3.</span> <span class="nav-text">Base64</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MD5"><span class="nav-number">4.</span> <span class="nav-text">MD5</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RSA分段加密"><span class="nav-number">5.</span> <span class="nav-text">RSA分段加密</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">henvy</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.1.2</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.1.2"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+
+  
+
+  
+
+  
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: false,
+    appId: 'XsnVGUN1q3EdjjX8gDUaC9dI-gzGzoHsz',
+    appKey: 'hmJIhkV9wwWT5Ip2Ngkaro8L',
+    placeholder: 'Just go go',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: true,
+    lang: '' || 'zh-cn'
+  });
+</script>
+
+
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"right","width":300,"height":600},"mobile":{"show":true}});</script></body>
+</html>
