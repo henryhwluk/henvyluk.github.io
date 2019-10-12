@@ -9,11 +9,19 @@ tag: Shadowsocks
 
 ### Shadowsocks update
 
-> Updated date：2019-09-18   
-> IP：34.84.1.66      
+> Updated date：2019-10-12   
+> IP：34.92.4.69      
 > 端口：1973    
 > 密碼：henvy  
 > 加密：rc4-md5
+
+<!-- more -->
+
+> Updated date：2019-09-18   
+> <del> IP：34.84.1.66   </del>   
+> <del>端口：1973    
+> 密碼：henvy  
+>  加密：rc4-md5
 
 <!-- more -->
 
@@ -30,7 +38,7 @@ tag: Shadowsocks
 > <del>端口：3777</del>  
 > 密碼：henvy  
 > 加密：rc4-md5
-   
+
 <!-- more -->
       
 > Updated date：2018-07-04  
