@@ -2,16 +2,24 @@
 title: Shadowsocks update
 urlPath: Shadowsocks
 date: 2018-03-21
-updated: 2019-09-18
+updated: 2020-03-14
 tag: Shadowsocks
 
 ---
 
 ### Shadowsocks update
 
-> Updated date：2020-01-02   
-> IP：104.199.239.234       
+> Updated date：2020-03-14   
+> IP：35.221.186.18       
 > 端口：1973    
+> 密碼：henvy  
+> 加密：rc4-md5
+
+<!-- more -->
+
+> Updated date：2020-01-02   
+> <del>IP：104.199.239.234 </del>      
+> <del>端口：1973    </del>
 > 密碼：henvy  
 > 加密：rc4-md5
 
